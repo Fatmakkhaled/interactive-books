@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties, PointerEvent } from "react";
 import { courses, levels } from "./courses";
 import type { Course } from "./courses";
 import "./App.css";
@@ -131,17 +132,124 @@ function initialBookmarks(): string[] {
     return [];
   }
 }
+
+function readRecentCourses(): string[] {
+  try {
+    const value: unknown = JSON.parse(
+      localStorage.getItem("iu-library-recent") || "[]",
+    );
+    return Array.isArray(value)
+      ? [
+          ...new Set(
+            value.filter(
+              (code): code is string =>
+                typeof code === "string" &&
+                courses.some((course) => course.code === code),
+            ),
+          ),
+        ].slice(0, 3)
+      : [];
+  } catch {
+    return [];
+  }
+}
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+function readMotionPreference() {
+  try {
+    return localStorage.getItem("iu-library-motion-paused") === "true";
+  } catch {
+    return false;
+  }
+}
+function useCardReveal() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const element = ref.current;
+    if (
+      !element ||
+      prefersReducedMotion() ||
+      !("IntersectionObserver" in window)
+    )
+      return;
+    element.classList.add("motion-ready");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          element.classList.add("is-visible");
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.08 },
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
+function tiltCard(event: PointerEvent<HTMLElement>) {
+  if (event.pointerType !== "mouse" || prefersReducedMotion()) return;
+  const element = event.currentTarget;
+  const bounds = element.getBoundingClientRect();
+  element.style.setProperty(
+    "--tilt-x",
+    `${((event.clientY - bounds.top) / bounds.height - 0.5) * -5}deg`,
+  );
+  element.style.setProperty(
+    "--tilt-y",
+    `${((event.clientX - bounds.left) / bounds.width - 0.5) * 5}deg`,
+  );
+}
+function resetTilt(event: PointerEvent<HTMLElement>) {
+  event.currentTarget.style.setProperty("--tilt-x", "0deg");
+  event.currentTarget.style.setProperty("--tilt-y", "0deg");
+}
+const spotlightCourses = [
+  {
+    course: courses.find((course) => course.code === "CF117")!,
+    description:
+      "Every great solution starts with a first line of code. Discover the building blocks of programming.",
+  },
+  {
+    course: courses.find((course) => course.code === "CF216")!,
+    description:
+      "Turn information into elegant solutions. Explore the structures behind smarter software.",
+  },
+  {
+    course: courses.find((course) => course.code === "AI311")!,
+    description:
+      "Explore where minds meet machines, and discover a new perspective on intelligence.",
+  },
+  {
+    course: courses.find((course) => course.code === "CF321")!,
+    description:
+      "Get to know the ideas shaping tomorrow. Take your next step into artificial intelligence.",
+  },
+];
+
 function CourseCard({
   course,
   saved,
   toggle,
+  onOpen,
+  index,
 }: {
   course: Course;
   saved: boolean;
   toggle: () => void;
+  onOpen: (code: string) => void;
+  index: number;
 }) {
+  const revealRef = useCardReveal();
   return (
-    <article className={`course-card tone-${course.icon}`}>
+    <article
+      ref={revealRef}
+      className={`course-card tone-${course.icon}`}
+      style={{ "--reveal-delay": `${(index % 3) * 65}ms` } as CSSProperties}
+      onPointerMove={tiltCard}
+      onPointerLeave={resetTilt}
+    >
       <div className="course-art">
         <div className="art-lines" />
         <span className="subject-icon">
@@ -168,7 +276,15 @@ function CourseCard({
           </span>
         </div>
         <h3>
-          <a href={course.url} target="_blank" rel="noopener noreferrer">
+          <a
+            href={course.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => onOpen(course.code)}
+            onAuxClick={(event) => {
+              if (event.button === 1) onOpen(course.code);
+            }}
+          >
             {course.title}
           </a>
         </h3>
@@ -178,6 +294,10 @@ function CourseCard({
           </span>
           <a
             className="open-book"
+            onClick={() => onOpen(course.code)}
+            onAuxClick={(event) => {
+              if (event.button === 1) onOpen(course.code);
+            }}
             href={course.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -198,6 +318,64 @@ function App() {
   const [bookmarks, setBookmarks] = useState(initialBookmarks);
   const [storageError, setStorageError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [recentCodes, setRecentCodes] = useState(readRecentCourses);
+  const [recentStorageError, setRecentStorageError] = useState(false);
+  const [spotlightIndex, setSpotlightIndex] = useState(0);
+  const [motionPaused, setMotionPaused] = useState(readMotionPreference);
+  const [reducedMotion, setReducedMotion] = useState(prefersReducedMotion);
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const changed = () => setReducedMotion(preference.matches);
+    preference.addEventListener("change", changed);
+    return () => preference.removeEventListener("change", changed);
+  }, []);
+  const motionOff = motionPaused || reducedMotion;
+  const spotlight = spotlightCourses[spotlightIndex];
+  const recentCourses = recentCodes
+    .map((code) => courses.find((course) => course.code === code)!)
+    .filter(Boolean);
+  function rememberCourse(code: string) {
+    const next = [code, ...recentCodes.filter((item) => item !== code)].slice(
+      0,
+      3,
+    );
+    setRecentCodes(next);
+    try {
+      localStorage.setItem("iu-library-recent", JSON.stringify(next));
+      setRecentStorageError(false);
+    } catch {
+      setRecentStorageError(true);
+    }
+  }
+  function clearRecent() {
+    setRecentCodes([]);
+    try {
+      localStorage.removeItem("iu-library-recent");
+      setRecentStorageError(false);
+    } catch {
+      setRecentStorageError(true);
+    }
+  }
+  function toggleMotion() {
+    setMotionPaused(!motionPaused);
+    try {
+      localStorage.setItem("iu-library-motion-paused", String(!motionPaused));
+    } catch {
+      /* The session preference still works. */
+    }
+  }
+  function moveHero(event: PointerEvent<HTMLElement>) {
+    if (motionOff || event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty(
+      "--hero-x",
+      `${((event.clientX - bounds.left) / bounds.width - 0.5) * 12}px`,
+    );
+    event.currentTarget.style.setProperty(
+      "--hero-y",
+      `${((event.clientY - bounds.top) / bounds.height - 0.5) * 8}px`,
+    );
+  }
   const filtered = courses.filter(
     (course) =>
       (level === "all" || course.level === level) &&
@@ -225,7 +403,9 @@ function App() {
     }
   }
   return (
-    <div className="app-shell">
+    <div
+      className={`app-shell ${motionOff ? "motion-paused" : "motion-enabled"}`}
+    >
       <aside className="sidebar">
         <a
           className="university-brand"
@@ -327,7 +507,14 @@ function App() {
               ✧
             </span>
           </section>
-          <section className="hero-banner">
+          <section
+            className="hero-banner"
+            onPointerMove={moveHero}
+            onPointerLeave={(event) => {
+              event.currentTarget.style.setProperty("--hero-x", "0px");
+              event.currentTarget.style.setProperty("--hero-y", "0px");
+            }}
+          >
             <div className="hero-copy">
               <span className="hero-pill">
                 <Icon name="spark" size={13} /> MADE FOR CURIOUS MINDS
@@ -375,6 +562,26 @@ function App() {
               </div>
               <span className="book-shadow" />
             </div>
+            <button
+              className="motion-toggle"
+              onClick={toggleMotion}
+              disabled={reducedMotion}
+              aria-pressed={motionOff}
+              aria-label={
+                reducedMotion
+                  ? "Reduced motion enabled by your device"
+                  : motionPaused
+                    ? "Resume animations"
+                    : "Pause animations"
+              }
+            >
+              <span aria-hidden="true">{motionOff ? "▷" : "Ⅱ"}</span>
+              {reducedMotion
+                ? "Reduced motion"
+                : motionPaused
+                  ? "Motion paused"
+                  : "Pause motion"}
+            </button>
             <span className="hero-corner">LEARN SOMETHING EXTRAORDINARY.</span>
           </section>
           <div className="stats-strip">
@@ -411,6 +618,145 @@ function App() {
               <span className="status-dot" /> Your learning journey, connected.
             </div>
           </div>
+          <section
+            className="spotlight-section"
+            aria-labelledby="spotlight-heading"
+          >
+            <div className="spotlight-intro">
+              <span className="spotlight-kicker">
+                <Icon name="spark" size={14} /> IN THE SPOTLIGHT
+              </span>
+              <h2 id="spotlight-heading">
+                One book.
+                <br />
+                <em>A whole new perspective.</em>
+              </h2>
+              <p>A little inspiration for your next learning adventure.</p>
+              <div className="spotlight-controls">
+                <button
+                  aria-label="Previous featured course"
+                  onClick={() =>
+                    setSpotlightIndex(
+                      (index) =>
+                        (index + spotlightCourses.length - 1) %
+                        spotlightCourses.length,
+                    )
+                  }
+                >
+                  ←
+                </button>
+                <div role="group" aria-label="Featured courses">
+                  {spotlightCourses.map((item, index) => (
+                    <button
+                      key={item.course.code}
+                      aria-label={`Feature ${item.course.code}`}
+                      aria-pressed={index === spotlightIndex}
+                      onClick={() => setSpotlightIndex(index)}
+                    >
+                      <span />
+                    </button>
+                  ))}
+                </div>
+                <button
+                  aria-label="Next featured course"
+                  onClick={() =>
+                    setSpotlightIndex(
+                      (index) => (index + 1) % spotlightCourses.length,
+                    )
+                  }
+                >
+                  →
+                </button>
+              </div>
+            </div>
+            <div className="spotlight-feature" key={spotlight.course.code}>
+              <div
+                className={`spotlight-art tone-${spotlight.course.icon}`}
+                aria-hidden="true"
+              >
+                <span className="spotlight-orbit" />
+                <Icon name={spotlight.course.icon} size={64} />
+                <strong>{spotlight.course.code}</strong>
+                <span className="spotlight-art-caption">
+                  OPEN A NEW POSSIBILITY
+                </span>
+              </div>
+              <div className="spotlight-content">
+                <div className="spotlight-tags">
+                  <span className="course-code">{spotlight.course.code}</span>
+                  <span>
+                    Level {spotlight.course.level} · {spotlight.course.subject}
+                  </span>
+                </div>
+                <h3>{spotlight.course.title}</h3>
+                <p>{spotlight.description}</p>
+                <a
+                  href={spotlight.course.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => rememberCourse(spotlight.course.code)}
+                  onAuxClick={(event) => {
+                    if (event.button === 1)
+                      rememberCourse(spotlight.course.code);
+                  }}
+                  className="spotlight-cta"
+                  aria-label={`Start learning ${spotlight.course.code} (new tab)`}
+                >
+                  Start learning <Icon name="arrow" size={16} />
+                </a>
+              </div>
+            </div>
+          </section>
+          {recentCourses.length > 0 && (
+            <section
+              className="recent-section"
+              aria-labelledby="recent-heading"
+            >
+              <div className="recent-heading">
+                <div>
+                  <p className="eyebrow">PICK UP WHERE CURIOSITY LEFT YOU</p>
+                  <h2 id="recent-heading">
+                    Continue learning<span className="heading-dot">.</span>
+                  </h2>
+                  <p>Your recently opened courses, ready when you are.</p>
+                </div>
+                <button onClick={clearRecent}>Clear history</button>
+              </div>
+              <div className="recent-grid">
+                {recentCourses.map((course, index) => (
+                  <a
+                    className="recent-course"
+                    href={course.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={course.code}
+                    onClick={() => rememberCourse(course.code)}
+                    onAuxClick={(event) => {
+                      if (event.button === 1) rememberCourse(course.code);
+                    }}
+                  >
+                    <span className="recent-course-icon">
+                      <Icon name={course.icon} size={23} />
+                    </span>
+                    <span>
+                      <small>
+                        {course.code}
+                        {index === 0 ? " · Last opened" : ""}
+                      </small>
+                      <strong>{course.title}</strong>
+                    </span>
+                    <Icon name="arrow" size={17} />
+                  </a>
+                ))}
+              </div>
+              {recentStorageError && (
+                <p className="storage-notice" role="status">
+                  Recently opened courses are available for this session. Your
+                  browser is preventing history from being saved for next time.
+                </p>
+              )}
+            </section>
+          )}
           <section id="collection" className="collection">
             <div className="collection-heading">
               <div>
@@ -485,7 +831,7 @@ function App() {
                 .map((item) => (
                   <section
                     className="level-section"
-                    key={item.value}
+                    key={`${item.value}-${level}-${savedOnly}-${query}`}
                     aria-labelledby={`level-${item.value}`}
                   >
                     <div className="level-heading">
@@ -521,10 +867,12 @@ function App() {
                     <div className="course-grid">
                       {filtered
                         .filter((course) => course.level === item.value)
-                        .map((course) => (
+                        .map((course, index) => (
                           <CourseCard
                             key={course.code}
                             course={course}
+                            index={index}
+                            onOpen={rememberCourse}
                             saved={bookmarks.includes(course.code)}
                             toggle={() => toggle(course.code)}
                           />
