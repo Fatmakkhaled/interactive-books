@@ -1,12 +1,22 @@
-# Interactive Books
+# Innovation University — Interactive Library
 
-A React + TypeScript reading app built with Vite. Browse and search three classic books, filter by genre, read selected chapter excerpts, adjust text size, and switch themes. Reading position is saved in browser local storage when available.
+A purple-and-white university course library built with React, TypeScript, and Vite. It brings together 19 externally hosted interactive books, grouped by academic level.
 
-The included texts are short public-domain excerpts, not complete books. No account, API key, database, or external service is needed. All fonts and artwork render locally.
+## Features
+
+- Foundation and separate Level 1, Level 2, and Level 3 sections.
+- Search by title, subject, or course code (including codes typed with spaces).
+- Bookmark courses and browse a personal saved collection. Bookmarks stay in browser local storage when available; storage restrictions do not prevent browsing.
+- Direct links to the supplied interactive books, opening in a new tab.
+- Responsive layouts and keyboard-accessible controls.
+
+Course data is in `src/courses.ts`. BS100 is inferred from the supplied Mathematics (0) URL. Other courses are grouped by the first digit of their numerical code. CF311 and CF312 intentionally retain the same supplied destination; UR121 retains the supplied destination whose hostname contains `ur113`.
+
+The current identity uses a text wordmark and a generic library symbol. The official university logo still needs to be supplied; it is not included in the repository.
 
 ## Development
 
-Use Node.js 24 and npm 11 (the cloud environment provides both).
+Use Node.js 24 and npm 11.
 
 ```sh
 cd /workspace/interactive-books
@@ -14,17 +24,21 @@ npm ci --no-audit --no-fund
 npm run dev -- --host 0.0.0.0 --port 5173 --strictPort
 ```
 
-## Checks
+## Validation
 
 ```sh
 npm run lint
 npm run build
 ```
 
-The build runs the TypeScript compiler and produces `dist/`. To serve the production build:
+The build runs TypeScript and generates `dist/`. In the prepared cloud environment, the additional browser check can be run with the dev server running:
 
 ```sh
-npm run preview -- --host 0.0.0.0 --port 4173 --strictPort
+node /workspace/interactive-books-tools/university-smoke-test.mjs
 ```
 
-App code is in `src/App.tsx`; book content is defined in its `books` array. Styles are in `src/App.css` and `src/index.css`.
+That helper is retained outside the Git checkout. It checks all 19 link destinations, level counts, search, bookmarks, storage failure handling, and mobile layouts.
+
+## Hosting
+
+Vercel can build this Vite project with `npm run build` and serve `dist/`. No API keys, server backend, or database are needed. Books remain hosted at their original destinations.

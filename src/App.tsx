@@ -1,65 +1,583 @@
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useRef, useState } from "react";
+import { courses, levels } from "./courses";
+import type { Course } from "./courses";
+import "./App.css";
 
-const books = [
-  { id: 'alice', title: 'Alice’s Adventures in Wonderland', author: 'Lewis Carroll', year: '1865', category: 'Fantasy', color: '#bd593c', mark: 'A', chapters: [
-    { title: 'Down the Rabbit-Hole', text: 'Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, “and what is the use of a book,” thought Alice “without pictures or conversations?”\n\nSo she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with pink eyes ran close by her.' },
-    { title: 'The Pool of Tears', text: '“Curiouser and curiouser!” cried Alice (she was so much surprised, that for the moment she quite forgot how to speak good English); “now I’m opening out like the largest telescope that ever was! Good-bye, feet!” (for when she looked down at her feet, they seemed to be almost out of sight, they were getting so far off).' },
-  ] },
-  { id: 'pride', title: 'Pride and Prejudice', author: 'Jane Austen', year: '1813', category: 'Fiction', color: '#536b55', mark: 'P', chapters: [
-    { title: 'A truth universally acknowledged', text: 'It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.\n\nHowever little known the feelings or views of such a man may be on his first entering a neighbourhood, this truth is so well fixed in the minds of the surrounding families, that he is considered the rightful property of some one or other of their daughters.' },
-    { title: 'An early visit', text: 'Mr. Bennet was among the earliest of those who waited on Mr. Bingley. He had always intended to visit him, though to the last always assuring his wife that he should not go; and till the evening after the visit was paid she had no knowledge of it.' },
-  ] },
-  { id: 'sherlock', title: 'The Adventures of Sherlock Holmes', author: 'Arthur Conan Doyle', year: '1892', category: 'Mystery', color: '#385e72', mark: 'S', chapters: [
-    { title: 'A Scandal in Bohemia', text: 'To Sherlock Holmes she is always the woman. I have seldom heard him mention her under any other name. In his eyes she eclipses and predominates the whole of her sex. It was not that he felt any emotion akin to love for Irene Adler. All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind.' },
-    { title: 'The Red-Headed League', text: 'I had called upon my friend, Mr. Sherlock Holmes, one day in the autumn of last year, and found him in deep conversation with a very stout, florid-faced, elderly gentleman with fiery red hair. With an apology for my intrusion, I was about to withdraw when Holmes pulled me abruptly into the room and closed the door behind me.' },
-  ] },
-]
-type Progress = Record<string, number>
-function readProgress(): Progress {
+function Icon({ name, size = 20 }: { name: string; size?: number }) {
+  const paths: Record<string, React.ReactNode> = {
+    book: (
+      <>
+        <path d="M12 6C8 3 5 3 2 4v15c3-1 6-1 10 2 4-3 7-3 10-2V4c-3-1-6-1-10 2Z" />
+        <path d="M12 6v15" />
+      </>
+    ),
+    grid: (
+      <>
+        <rect x="3" y="3" width="7" height="7" rx="1.5" />
+        <rect x="14" y="3" width="7" height="7" rx="1.5" />
+        <rect x="3" y="14" width="7" height="7" rx="1.5" />
+        <rect x="14" y="14" width="7" height="7" rx="1.5" />
+      </>
+    ),
+    bookmark: <path d="M6 4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17l-6-4-6 4Z" />,
+    search: (
+      <>
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <path d="m16 16 5 5" />
+      </>
+    ),
+    arrow: (
+      <>
+        <path d="M5 19 19 5M5 5h14v14" />
+      </>
+    ),
+    chevron: <path d="m9 5 7 7-7 7" />,
+    code: (
+      <>
+        <path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16" />
+      </>
+    ),
+    globe: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <ellipse cx="12" cy="12" rx="4" ry="9" />
+        <path d="M3 12h18" />
+      </>
+    ),
+    spark: (
+      <>
+        <path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z" />
+      </>
+    ),
+    monitor: (
+      <>
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8m-4-4v4" />
+      </>
+    ),
+    math: (
+      <>
+        <path d="M19 4H5l8 8-8 8h14" />
+      </>
+    ),
+    layers: (
+      <>
+        <path d="m12 3 10 5-10 5L2 8Zm-10 9 10 5 10-5M2 16l10 5 10-5" />
+      </>
+    ),
+    chart: (
+      <>
+        <path d="M4 3v18h17M8 16v-5m5 5V7m5 9v-7" />
+      </>
+    ),
+    network: (
+      <>
+        <rect x="9" y="2" width="6" height="6" rx="1" />
+        <rect x="2" y="16" width="6" height="6" rx="1" />
+        <rect x="16" y="16" width="6" height="6" rx="1" />
+        <path d="M12 8v4M5 16v-4h14v4" />
+      </>
+    ),
+    chip: (
+      <>
+        <rect x="6" y="6" width="12" height="12" rx="2" />
+        <path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4" />
+        <rect x="10" y="10" width="4" height="4" />
+      </>
+    ),
+    brain: (
+      <>
+        <path d="M12 5c-2-4-7-2-7 2-4 1-4 7-1 8-1 5 5 8 8 4 3 4 9 1 8-4 3-1 3-7-1-8 0-4-5-6-7-2Zm0 0v14M6 9l3 2m9-2-3 2M6 16l3-1m9 1-3-1" />
+      </>
+    ),
+    shield: (
+      <>
+        <path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6Z" />
+        <path d="m8 12 3 3 5-6" />
+      </>
+    ),
+    close: <path d="m6 6 12 12M6 18 18 6" />,
+    check: <path d="m5 12 4 4L19 6" />,
+  };
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {paths[name] || paths.book}
+    </svg>
+  );
+}
+function initialBookmarks(): string[] {
   try {
-    const value: unknown = JSON.parse(localStorage.getItem('interactive-books-progress') || '{}')
-    if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
-    return Object.fromEntries(Object.entries(value).filter(([id, chapter]) => {
-      const book = books.find(item => item.id === id)
-      return book && Number.isInteger(chapter) && chapter >= 0 && chapter < book.chapters.length
-    }))
-  } catch { return {} }
-}
-function App() {
-  const [query, setQuery] = useState('')
-  const [category, setCategory] = useState('All books')
-  const [selected, setSelected] = useState<string | null>(null)
-  const [progress, setProgress] = useState<Progress>(readProgress)
-  const [fontSize, setFontSize] = useState(20)
-  const [dark, setDark] = useState(false)
-  useEffect(() => {
-    try { localStorage.setItem('interactive-books-progress', JSON.stringify(progress)) } catch { /* Reading remains available without storage. */ }
-  }, [progress])
-  const book = books.find(item => item.id === selected)
-  const chapter = book ? progress[book.id] ?? 0 : 0
-  const filtered = books.filter(item => (category === 'All books' || item.category === category) && `${item.title} ${item.author}`.toLowerCase().includes(query.toLowerCase()))
-  function openBook(id: string) {
-    setProgress(previous => ({ ...previous, [id]: previous[id] ?? 0 }))
-    setSelected(id)
-    window.scrollTo(0, 0)
+    const saved: unknown = JSON.parse(
+      localStorage.getItem("iu-library-bookmarks") || "[]",
+    );
+    return Array.isArray(saved)
+      ? saved.filter(
+          (code): code is string =>
+            typeof code === "string" &&
+            courses.some((course) => course.code === code),
+        )
+      : [];
+  } catch {
+    return [];
   }
-  return <div className={dark ? 'app dark' : 'app'}>
-    <header className="header"><button className="brand" onClick={() => setSelected(null)} aria-label="Interactive Books home"><span className="brand-icon">▤</span> interactive books<span className="brand-dot">.</span></button><span className="header-note">A little space for a good story</span><button className="theme" onClick={() => setDark(!dark)} aria-label={dark ? 'Use light theme' : 'Use dark theme'}>{dark ? '☀' : '☾'}</button></header>
-    <main>
-      {book ? <>
-        <div className="reader-toolbar"><button className="text-button" onClick={() => setSelected(null)}>← Back to library</button><div className="font-controls"><button aria-label="Decrease text size" disabled={fontSize <= 16} onClick={() => setFontSize(size => size - 2)}>A−</button><span>Text size</span><button aria-label="Increase text size" disabled={fontSize >= 30} onClick={() => setFontSize(size => size + 2)}>A+</button></div></div>
-        <div className="reader-layout"><aside className="contents"><p className="eyebrow">CONTENTS</p><h2>{book.title}</h2><p>{book.author}</p>{book.chapters.map((item, index) => <button key={item.title} aria-current={chapter === index ? 'page' : undefined} className={chapter === index ? 'chapter active' : 'chapter'} onClick={() => setProgress(previous => ({ ...previous, [book.id]: index }))}><span>0{index + 1}</span>{item.title}</button>)}<small>Public-domain chapter excerpts</small></aside>
-          <article className="reader"><p className="eyebrow">CHAPTER {chapter + 1} OF {book.chapters.length}</p><h1>{book.chapters[chapter].title}</h1><div className="reading-text" style={{ fontSize }}>{book.chapters[chapter].text.split('\n\n').map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div><div className="chapter-navigation"><button disabled={chapter === 0} onClick={() => setProgress(previous => ({ ...previous, [book.id]: chapter - 1 }))}>← Previous</button><span>{chapter + 1} / {book.chapters.length}</span><button disabled={chapter === book.chapters.length - 1} onClick={() => setProgress(previous => ({ ...previous, [book.id]: chapter + 1 }))}>Next chapter →</button></div><p className="saved-note">Your place is remembered on this device when browser storage is available.</p></article></div>
-      </> : <>
-        <section className="hero"><div><p className="eyebrow">YOUR PERSONAL READING ROOM</p><h1>A new chapter<br />starts <em>here.</em></h1><p className="hero-description">Step away from the everyday. Find a familiar favorite,<br className="desktop-break" /> wander somewhere new, and make time for a story.</p><a className="primary-button" href="#library">Explore the library <span>↗</span></a></div><div className="hero-art" aria-hidden="true"><span className="orbit orbit-one"/><span className="orbit orbit-two"/><div className="decor-book back-book">a world<br />of wonder</div><div className="decor-book front-book"><span>LEWIS CARROLL</span><strong>Alice’s<br />Adventures in<br /><i>Wonderland</i></strong><div className="book-flower">✳</div><small>THE CLASSICS COLLECTION</small></div><span className="art-star">✧</span><span className="art-caption">Lose yourself. Find a story.</span></div></section>
-        <section id="library" className="library"><div className="library-heading"><div><p className="eyebrow">A SHELF OF POSSIBILITIES</p><h2>Your next good read</h2></div><label className="search"><span aria-hidden="true">⌕</span><input type="search" placeholder="Search books or authors" aria-label="Search books or authors" value={query} onChange={event => setQuery(event.target.value)} /></label></div>
-          <div className="filter-row"><div className="filters">{['All books', 'Fiction', 'Fantasy', 'Mystery'].map(item => <button key={item} className={category === item ? 'filter selected' : 'filter'} aria-pressed={category === item} onClick={() => setCategory(item)}>{item}</button>)}</div><span className="book-count">{filtered.length} {filtered.length === 1 ? 'book' : 'books'} to discover</span></div>
-          <div className="book-grid">{filtered.map(item => <button key={item.id} className="book-card" onClick={() => openBook(item.id)}><div className="cover" style={{ backgroundColor: item.color }}><div className="cover-border"><span className="cover-author">{item.author}</span><strong>{item.title}</strong><span className="cover-mark">{item.mark}</span><small>THE CLASSICS COLLECTION</small></div></div><div className="book-meta"><span>{item.category} · {item.year}</span><span>↗</span></div><h3>{item.title}</h3><p>{item.author}</p><span className="read-link">{item.id in progress ? 'Continue reading' : 'Start reading'} →</span></button>)}</div>
-          {filtered.length === 0 && <div className="empty"><h3>No books found</h3><p>Try another title, author, or category.</p><button onClick={() => { setQuery(''); setCategory('All books') }}>Show all books</button></div>}
-        </section><div className="quote"><span>“</span><blockquote>There is no friend as loyal as a book.</blockquote><p>ERNEST HEMINGWAY</p></div>
-      </>}
-    </main><footer><span>interactive books.</span><p>Read a little. Discover a lot.</p><small>Three classics, selected public-domain excerpts.</small></footer>
-  </div>
 }
-export default App
+function CourseCard({
+  course,
+  saved,
+  toggle,
+}: {
+  course: Course;
+  saved: boolean;
+  toggle: () => void;
+}) {
+  return (
+    <article className={`course-card tone-${course.icon}`}>
+      <div className="course-art">
+        <div className="art-lines" />
+        <span className="subject-icon">
+          <Icon name={course.icon} size={28} />
+        </span>
+        <span className="art-code" aria-hidden="true">
+          {course.code}
+        </span>
+        <span className="art-subject">{course.subject}</span>
+        <button
+          className={`save-button ${saved ? "is-saved" : ""}`}
+          onClick={toggle}
+          aria-pressed={saved}
+          aria-label={`${saved ? "Remove" : "Save"} ${course.code} ${saved ? "from" : "to"} saved books`}
+        >
+          <Icon name="bookmark" size={17} />
+        </button>
+      </div>
+      <div className="course-body">
+        <div className="course-tags">
+          <span className="course-code">{course.code}</span>
+          <span className="interactive-label">
+            <span /> Interactive book
+          </span>
+        </div>
+        <h3>
+          <a href={course.url} target="_blank" rel="noopener noreferrer">
+            {course.title}
+          </a>
+        </h3>
+        <div className="course-bottom">
+          <span>
+            {course.level === 0 ? "Foundation" : `Level ${course.level}`}
+          </span>
+          <a
+            className="open-book"
+            href={course.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${course.code} ${course.title} (new tab)`}
+          >
+            Open book <Icon name="arrow" size={15} />
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+}
+const copyrightYear = new Date().getFullYear();
+function App() {
+  const [level, setLevel] = useState<number | "all">("all");
+  const [query, setQuery] = useState("");
+  const [savedOnly, setSavedOnly] = useState(false);
+  const [bookmarks, setBookmarks] = useState(initialBookmarks);
+  const [storageError, setStorageError] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const filtered = courses.filter(
+    (course) =>
+      (level === "all" || course.level === level) &&
+      (!savedOnly || bookmarks.includes(course.code)) &&
+      `${course.code} ${course.title} ${course.subject}`
+        .toLowerCase()
+        .replace(/\s/g, "")
+        .includes(query.toLowerCase().replace(/\s/g, "")),
+  );
+  function navigate(next: number | "all", saved = false) {
+    setLevel(next);
+    setSavedOnly(saved);
+    setQuery("");
+  }
+  function toggle(code: string) {
+    const next = bookmarks.includes(code)
+      ? bookmarks.filter((item) => item !== code)
+      : [...bookmarks, code];
+    setBookmarks(next);
+    try {
+      localStorage.setItem("iu-library-bookmarks", JSON.stringify(next));
+      setStorageError(false);
+    } catch {
+      setStorageError(true);
+    }
+  }
+  return (
+    <div className="app-shell">
+      <aside className="sidebar">
+        <a
+          className="university-brand"
+          href="#"
+          onClick={(event) => {
+            event.preventDefault();
+            navigate("all");
+          }}
+        >
+          <span className="brand-emblem">
+            <Icon name="book" size={27} />
+          </span>
+          <span>
+            INNOVATION<span>UNIVERSITY</span>
+            <small>INTERACTIVE LIBRARY</small>
+          </span>
+        </a>
+        <div className="sidebar-content">
+          <p className="nav-label">YOUR LEARNING SPACE</p>
+          <nav aria-label="Library navigation">
+            <button
+              className={`nav-item ${!savedOnly && level === "all" ? "active" : ""}`}
+              onClick={() => navigate("all")}
+            >
+              <Icon name="grid" />
+              <span>All books</span>
+              <span className="nav-count">19</span>
+            </button>
+            <button
+              className={`nav-item ${savedOnly ? "active" : ""}`}
+              onClick={() => navigate("all", true)}
+            >
+              <Icon name="bookmark" />
+              <span>Saved books</span>
+              <span className="nav-count">{bookmarks.length}</span>
+            </button>
+            <p className="nav-label levels-label">BROWSE BY LEVEL</p>
+            {levels.map((item) => (
+              <button
+                key={item.value}
+                className={`nav-item level-nav ${!savedOnly && level === item.value ? "active" : ""}`}
+                onClick={() => navigate(item.value)}
+              >
+                <span className="level-square">
+                  {item.value === 0 ? "F" : `0${item.value}`}
+                </span>
+                <span>{item.name}</span>
+                <Icon name="chevron" size={14} />
+              </button>
+            ))}
+          </nav>
+        </div>
+        <div className="sidebar-bottom">
+          <div className="sidebar-message">
+            <span className="mini-spark">✧</span>
+            <strong>Big ideas start here.</strong>
+            <p>
+              Your next discovery is
+              <br />
+              just a chapter away.
+            </p>
+          </div>
+          <span className="university-caption">
+            <span className="status-dot" /> Innovation University
+          </span>
+        </div>
+      </aside>
+      <div className="workspace">
+        <header className="topbar">
+          <div className="breadcrumb">
+            Learning resources <Icon name="chevron" size={13} />
+            <strong>Interactive library</strong>
+          </div>
+          <a
+            className="topbar-link"
+            href="#collection"
+            onClick={() => inputRef.current?.focus()}
+          >
+            <Icon name="search" size={17} />
+            <span>Find your next chapter</span>
+          </a>
+        </header>
+        <main>
+          <section className="welcome">
+            <div>
+              <p className="eyebrow">
+                <span /> THE INNOVATION UNIVERSITY LIBRARY
+              </p>
+              <h1>
+                Your knowledge.
+                <br className="mobile-break" /> <span>Your next chapter.</span>
+              </h1>
+              <p className="welcome-copy">
+                A world of ideas, organized for you. Explore your courses, open
+                a book, and keep moving forward.
+              </p>
+            </div>
+            <span className="welcome-decoration" aria-hidden="true">
+              ✧
+            </span>
+          </section>
+          <section className="hero-banner">
+            <div className="hero-copy">
+              <span className="hero-pill">
+                <Icon name="spark" size={13} /> MADE FOR CURIOUS MINDS
+              </span>
+              <h2>
+                Great minds.
+                <br />
+                <em>Limitless possibilities.</em>
+              </h2>
+              <p>
+                Your interactive textbooks, all in one place.
+                <br />
+                Built around your journey. Ready when you are.
+              </p>
+              <a
+                className="hero-cta"
+                href="#collection"
+                onClick={() => navigate("all")}
+              >
+                Explore the collection <Icon name="arrow" size={17} />
+              </a>
+            </div>
+            <div className="hero-illustration" aria-hidden="true">
+              <span className="hero-orbit orbit-one" />
+              <span className="hero-orbit orbit-two" />
+              <span className="floating-symbol symbol-code">&lt;/&gt;</span>
+              <span className="floating-symbol symbol-spark">✧</span>
+              <span className="floating-symbol symbol-math">∑</span>
+              <div className="illustrated-book book-back">
+                <span>DISCOVER</span>
+                <Icon name="globe" size={50} />
+                <small>NEW PERSPECTIVES</small>
+              </div>
+              <div className="illustrated-book book-front">
+                <div className="book-topline">INNOVATION UNIVERSITY</div>
+                <span>
+                  Think.
+                  <br />
+                  Explore.
+                  <br />
+                  <em>Innovate.</em>
+                </span>
+                <Icon name="spark" size={40} />
+                <small>YOUR JOURNEY STARTS HERE</small>
+              </div>
+              <span className="book-shadow" />
+            </div>
+            <span className="hero-corner">LEARN SOMETHING EXTRAORDINARY.</span>
+          </section>
+          <div className="stats-strip">
+            <div>
+              <span className="stat-icon">
+                <Icon name="book" />
+              </span>
+              <p>
+                <strong>19</strong>
+                <span>Interactive books</span>
+              </p>
+            </div>
+            <div>
+              <span className="stat-icon">
+                <Icon name="layers" />
+              </span>
+              <p>
+                <strong>
+                  3 <small>+ Foundation</small>
+                </strong>
+                <span>Academic levels</span>
+              </p>
+            </div>
+            <div>
+              <span className="stat-icon">
+                <Icon name="globe" />
+              </span>
+              <p>
+                <strong>One place.</strong>
+                <span>A whole world of knowledge</span>
+              </p>
+            </div>
+            <div className="stats-note">
+              <span className="status-dot" /> Your learning journey, connected.
+            </div>
+          </div>
+          <section id="collection" className="collection">
+            <div className="collection-heading">
+              <div>
+                <p className="eyebrow">EXPLORE. LEARN. GROW.</p>
+                <h2>
+                  {savedOnly ? "Your saved collection" : "The book collection"}
+                  <span className="heading-dot">.</span>
+                </h2>
+              </div>
+              <label className="search-field">
+                <Icon name="search" size={18} />
+                <input
+                  ref={inputRef}
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search by title or course code..."
+                  aria-label="Search books by title or course code"
+                />
+                {query && (
+                  <button
+                    onClick={() => {
+                      setQuery("");
+                      inputRef.current?.focus();
+                    }}
+                    aria-label="Clear search"
+                  >
+                    <Icon name="close" size={15} />
+                  </button>
+                )}
+              </label>
+            </div>
+            <div className="collection-controls">
+              <div
+                className="level-tabs"
+                role="group"
+                aria-label="Filter by academic level"
+              >
+                <button
+                  aria-pressed={level === "all"}
+                  className={level === "all" ? "selected" : ""}
+                  onClick={() => setLevel("all")}
+                >
+                  All levels <span>{savedOnly ? bookmarks.length : 19}</span>
+                </button>
+                {levels.map((item) => (
+                  <button
+                    key={item.value}
+                    aria-pressed={level === item.value}
+                    className={level === item.value ? "selected" : ""}
+                    onClick={() => setLevel(item.value)}
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+              <span className="results-count" role="status">
+                {filtered.length} {filtered.length === 1 ? "book" : "books"}
+              </span>
+            </div>
+            {storageError && (
+              <p className="storage-notice" role="status">
+                Bookmarks are available for this session. Your browser is
+                preventing them from being saved for next time.
+              </p>
+            )}
+            {filtered.length ? (
+              levels
+                .filter((item) =>
+                  filtered.some((course) => course.level === item.value),
+                )
+                .map((item) => (
+                  <section
+                    className="level-section"
+                    key={item.value}
+                    aria-labelledby={`level-${item.value}`}
+                  >
+                    <div className="level-heading">
+                      <span
+                        className={`level-heading-icon level-${item.value}`}
+                      >
+                        {item.value === 0 ? (
+                          <Icon name="spark" size={19} />
+                        ) : (
+                          `0${item.value}`
+                        )}
+                      </span>
+                      <div>
+                        <h3 id={`level-${item.value}`}>
+                          {item.name}
+                          <span>
+                            {
+                              filtered.filter(
+                                (course) => course.level === item.value,
+                              ).length
+                            }{" "}
+                            {filtered.filter(
+                              (course) => course.level === item.value,
+                            ).length === 1
+                              ? "book"
+                              : "books"}
+                          </span>
+                        </h3>
+                        <p>{item.description}</p>
+                      </div>
+                      <span className="section-rule" />
+                    </div>
+                    <div className="course-grid">
+                      {filtered
+                        .filter((course) => course.level === item.value)
+                        .map((course) => (
+                          <CourseCard
+                            key={course.code}
+                            course={course}
+                            saved={bookmarks.includes(course.code)}
+                            toggle={() => toggle(course.code)}
+                          />
+                        ))}
+                    </div>
+                  </section>
+                ))
+            ) : (
+              <div className="empty-state">
+                <span>
+                  <Icon
+                    name={savedOnly && !query ? "bookmark" : "search"}
+                    size={32}
+                  />
+                </span>
+                <h3>
+                  {savedOnly && !query
+                    ? "Your next favorites belong here."
+                    : "No books found."}
+                </h3>
+                <p>
+                  {savedOnly && !query
+                    ? "Save a book using its bookmark icon to build your own collection."
+                    : "Try a different title, course code, or academic level."}
+                </p>
+                <button onClick={() => navigate("all")}>
+                  Browse all books <Icon name="arrow" size={15} />
+                </button>
+              </div>
+            )}
+          </section>
+          <section className="closing-note">
+            <span>
+              <Icon name="spark" size={24} />
+            </span>
+            <div>
+              <h2>A little curiosity goes a long way.</h2>
+              <p>Make your next chapter a great one.</p>
+            </div>
+            <a href="#collection">
+              Keep exploring <Icon name="arrow" size={16} />
+            </a>
+          </section>
+          <footer>
+            <span>
+              © {copyrightYear} Innovation University{" "}
+              <span className="footer-divider">/</span> Interactive Library
+            </span>
+            <span>Created for learning. Inspired by innovation.</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+  );
+}
+export default App;
