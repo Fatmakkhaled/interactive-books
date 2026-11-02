@@ -328,20 +328,3 @@
     opacity: 0;
   }
 }
-.robot-motion-toggle {
-  margin-top: 9px;
-  border: 1px solid #d8c3e7;
-  border-radius: 20px;
-  color: #a080b8;
-  background: #ffffff55;
-  padding: 4px 9px;
-  font-size: 7px;
-  line-height: 1.5;
-}
-.robot-motion-toggle:hover:not(:disabled) {
-  background: #ffffffa8;
-}
-.robot-motion-toggle:disabled {
-  cursor: default;
-  opacity: 0.65;
-}

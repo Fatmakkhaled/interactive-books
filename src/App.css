@@ -2706,16 +2706,6 @@ html:has(.motion-paused) {
   color: #e1c8f3;
   line-height: 1.7;
 }
-.hero-robot .robot-motion-toggle {
-  font-size: 11px;
-  color: #f0ddff;
-  background: #ffffff0f;
-  border-color: #ffffff2b;
-  min-height: 29px;
-}
-.hero-robot .robot-motion-toggle:hover:not(:disabled) {
-  color: #734897;
-}
 .hero-copy {
   padding-bottom: 31px;
 }

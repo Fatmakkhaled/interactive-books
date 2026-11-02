@@ -8,9 +8,6 @@ import ReadingRobot from "./ReadingRobot";
 
 type Props = {
   onBack: () => void;
-  motionPaused: boolean;
-  reducedMotion: boolean;
-  onToggleMotion: () => void;
 };
 function References({ ids, result }: { ids: number[]; result: StudyResult }) {
   return (
@@ -27,12 +24,7 @@ function References({ ids, result }: { ids: number[]; result: StudyResult }) {
     </div>
   );
 }
-export default function StudyAssistant({
-  onBack,
-  motionPaused,
-  reducedMotion,
-  onToggleMotion,
-}: Props) {
+export default function StudyAssistant({ onBack }: Props) {
   const [mode, setMode] = useState<StudyMode>("summary");
   const [courseCode, setCourseCode] = useState("");
   const [notes, setNotes] = useState("");
@@ -181,9 +173,6 @@ export default function StudyAssistant({
           </p>
         </div>
         <ReadingRobot
-          motionPaused={motionPaused}
-          reducedMotion={reducedMotion}
-          onToggleMotion={onToggleMotion}
           activity={
             busy || readingPdf
               ? "thinking"

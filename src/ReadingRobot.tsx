@@ -27,14 +27,8 @@ const captions: Record<Expression, string> = {
 
 export default function ReadingRobot({
   activity = "idle",
-  motionPaused,
-  reducedMotion,
-  onToggleMotion,
 }: {
   activity?: Activity;
-  motionPaused: boolean;
-  reducedMotion: boolean;
-  onToggleMotion: () => void;
 }) {
   const id = `reading-robot-${useId().replace(/:/g, "")}`;
   const [playful, setPlayful] = useState<{
@@ -452,32 +446,12 @@ export default function ReadingRobot({
         </span>
       </button>
       <figcaption>
-        <strong>Your little reading companion</strong>
+        <strong>Your little study buddy</strong>
         <span className="robot-caption" aria-live="polite">
           {activity === "retry" && playful?.activity !== activity
             ? "A little pause. We can try again."
             : captions[expression]}
         </span>
-        <button
-          type="button"
-          className="robot-motion-toggle"
-          disabled={reducedMotion}
-          aria-pressed={motionPaused}
-          aria-label={
-            reducedMotion
-              ? "Robot motion reduced by your device"
-              : motionPaused
-                ? "Resume animations"
-                : "Pause animations"
-          }
-          onClick={onToggleMotion}
-        >
-          {reducedMotion
-            ? "Reduced motion"
-            : motionPaused
-              ? "▷ Resume motion"
-              : "Ⅱ Pause motion"}
-        </button>
       </figcaption>
     </figure>
   );

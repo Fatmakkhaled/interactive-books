@@ -157,13 +157,6 @@ function readRecentCourses(): string[] {
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
-function readMotionPreference() {
-  try {
-    return localStorage.getItem("iu-library-motion-paused") === "true";
-  } catch {
-    return false;
-  }
-}
 function useCardReveal() {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -322,7 +315,6 @@ function App() {
   const [recentCodes, setRecentCodes] = useState(readRecentCourses);
   const [recentStorageError, setRecentStorageError] = useState(false);
   const [spotlightIndex, setSpotlightIndex] = useState(0);
-  const [motionPaused, setMotionPaused] = useState(readMotionPreference);
   const [reducedMotion, setReducedMotion] = useState(prefersReducedMotion);
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -330,7 +322,7 @@ function App() {
     preference.addEventListener("change", changed);
     return () => preference.removeEventListener("change", changed);
   }, []);
-  const motionOff = motionPaused || reducedMotion;
+  const motionOff = reducedMotion;
   const spotlight = spotlightCourses[spotlightIndex];
   const recentCourses = recentCodes
     .map((code) => courses.find((course) => course.code === code)!)
@@ -355,14 +347,6 @@ function App() {
       setRecentStorageError(false);
     } catch {
       setRecentStorageError(true);
-    }
-  }
-  function toggleMotion() {
-    setMotionPaused(!motionPaused);
-    try {
-      localStorage.setItem("iu-library-motion-paused", String(!motionPaused));
-    } catch {
-      /* The session preference still works. */
     }
   }
   function moveHero(event: PointerEvent<HTMLElement>) {
@@ -559,9 +543,6 @@ function App() {
                       ? "success"
                       : "idle"
                 }
-                motionPaused={motionOff}
-                reducedMotion={reducedMotion}
-                onToggleMotion={toggleMotion}
               />
             </div>
           </section>

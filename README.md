@@ -9,10 +9,10 @@ A purple-and-white university course library built with React, TypeScript, and V
 - Bookmark courses and browse a personal saved collection. Bookmarks stay in browser local storage when available; storage restrictions do not prevent browsing.
 - Direct links to the supplied interactive books, opening in a new tab.
 - A reading-robot welcome banner, card tilt, scroll reveals, bookmark feedback, and smooth filter entrances.
-- A persistent pause-motion control and live support for operating-system reduced-motion preferences.
+- Live support for operating-system reduced-motion preferences.
 - A manually browsable course spotlight with direct learning links.
 - Continue learning from up to three recently opened courses. This is local opening history, not reading progress inside externally hosted books; users can clear it.
-- A purple-and-white reading robot in the main welcome banner. It blinks, turns pages, reacts to course searches and saved-book browsing, and cycles five expressions by click, tap, Enter, or Space. Its motion control shares the library preference and respects reduced-motion settings.
+- A purple-and-white reading robot in the main welcome banner. It blinks, turns pages, reacts to course searches and saved-book browsing, and cycles five expressions by click, tap, Enter, or Space. Its motion follows the device’s reduced-motion setting. It is labeled “Your little study buddy.”
 - Responsive layouts and keyboard-accessible controls.
 
 Course data is in `src/courses.ts`. BS100 is inferred from the supplied Mathematics (0) URL. Other courses are grouped by the first digit of their numerical code. CF311 and CF312 intentionally retain the same supplied destination; UR121 retains the supplied destination whose hostname contains `ur113`.
