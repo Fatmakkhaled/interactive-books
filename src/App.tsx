@@ -507,7 +507,12 @@ function App() {
         </header>
         <main>
           {showStudyAssistant ? (
-            <StudyAssistant onBack={() => navigate("all")} />
+            <StudyAssistant
+              onBack={() => navigate("all")}
+              motionPaused={motionOff}
+              reducedMotion={reducedMotion}
+              onToggleMotion={toggleMotion}
+            />
           ) : (
             <>
               <section className="welcome">

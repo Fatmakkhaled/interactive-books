@@ -1,0 +1,347 @@
+.reading-robot {
+  width: 270px;
+  max-width: 100%;
+  margin: -20px 0 -9px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.robot-play {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 24px;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.robot-play:focus-visible {
+  outline: 2px solid #ac7bd7;
+  outline-offset: 4px;
+}
+.robot-illustration {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.robot-action-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #a57cbd;
+  background: #ffffff70;
+  border: 1px solid #ffffff9e;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 7px;
+  line-height: 1.4;
+}
+.reading-robot figcaption {
+  margin-top: 12px;
+  min-height: 36px;
+}
+.reading-robot figcaption > strong {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #8d61aa;
+}
+.robot-caption {
+  display: block;
+  font-size: 8px;
+  color: #ab8cbd;
+  line-height: 1.7;
+  margin-top: 4px;
+}
+.robot-float {
+  transform-origin: 180px 180px;
+  animation: robot-sway 7s ease-in-out infinite;
+}
+.robot-head {
+  transform-origin: 180px 176px;
+  animation: robot-read 9s ease-in-out infinite;
+}
+.robot-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robot-blink 6.2s ease-in-out infinite;
+}
+.robot-eye:nth-child(2) {
+  animation-delay: 0.03s;
+}
+.robot-antenna-light {
+  animation: robot-glimmer 4s ease-in-out infinite;
+}
+.robot-turning-page {
+  transform-origin: 180px 250px;
+  animation: robot-page 10s ease-in-out infinite;
+}
+.robot-floor-shadow {
+  transform-origin: 180px 316px;
+  animation: robot-shadow 7s ease-in-out infinite;
+}
+.robot-sparkles {
+  animation: robot-twinkle 6s ease-in-out infinite;
+}
+.robot-thinking-dots {
+  opacity: 0;
+}
+.expression-thinking .robot-thinking-dots {
+  opacity: 1;
+}
+.expression-thinking .robot-thinking-dots > circle {
+  animation: robot-dot 1.8s ease-in-out infinite;
+}
+.expression-thinking .robot-thinking-dots > circle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.expression-thinking .robot-thinking-dots > circle:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.expression-thinking .robot-head {
+  animation: robot-think 5s ease-in-out infinite;
+}
+.expression-thinking .robot-turning-page {
+  animation-duration: 6s;
+}
+.expression-happy .robot-head {
+  animation: robot-nod 3.5s ease-in-out infinite;
+}
+.expression-surprised .robot-head {
+  rotate: -5deg;
+}
+.expression-curious .robot-head {
+  rotate: 3deg;
+}
+.robot-play:hover .robot-action-hint {
+  background: #fff;
+  border-color: #d7bde9;
+}
+.study-welcome:has(.reading-robot) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  align-items: center;
+  gap: 8px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+}
+.study-welcome-copy > p {
+  font-size: 11px;
+  line-height: 1.9;
+  color: #a088b0;
+  position: relative;
+  z-index: 1;
+}
+.study-welcome-copy {
+  min-width: 0;
+}
+@keyframes robot-sway {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -5px;
+  }
+}
+@keyframes robot-read {
+  0%,
+  35%,
+  70%,
+  100% {
+    rotate: 0deg;
+  }
+  45%,
+  58% {
+    rotate: -3deg;
+  }
+}
+@keyframes robot-blink {
+  0%,
+  41%,
+  45%,
+  100% {
+    scale: 1 1;
+  }
+  43% {
+    scale: 1 0.08;
+  }
+}
+@keyframes robot-glimmer {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes robot-page {
+  0%,
+  65%,
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  80% {
+    transform: scaleX(-0.9);
+    opacity: 1;
+  }
+  86% {
+    transform: scaleX(-1);
+    opacity: 0;
+  }
+}
+@keyframes robot-shadow {
+  0%,
+  100% {
+    scale: 1;
+    opacity: 0.8;
+  }
+  50% {
+    scale: 0.9;
+    opacity: 0.55;
+  }
+}
+@keyframes robot-twinkle {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+@keyframes robot-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+    translate: 0 0;
+  }
+  40% {
+    opacity: 1;
+    translate: 0 -3px;
+  }
+}
+@keyframes robot-think {
+  0%,
+  100% {
+    rotate: -4deg;
+  }
+  50% {
+    rotate: 2deg;
+  }
+}
+@keyframes robot-nod {
+  0%,
+  55%,
+  100% {
+    translate: 0 0;
+  }
+  65%,
+  85% {
+    translate: 0 2px;
+  }
+  75% {
+    translate: 0 -2px;
+  }
+}
+@media (max-width: 1180px) {
+  .study-welcome:has(.reading-robot) {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 0;
+    padding-left: 28px;
+    padding-right: 20px;
+  }
+  .reading-robot {
+    width: 220px;
+  }
+  .study-welcome:has(.reading-robot) h1 {
+    font-size: 36px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .study-welcome:has(.reading-robot) {
+    grid-template-columns: minmax(0, 1fr) 180px;
+  }
+  .reading-robot {
+    width: 180px;
+  }
+  .study-welcome:has(.reading-robot) h1 {
+    font-size: 32px;
+  }
+  .study-welcome-copy > p {
+    font-size: 10px;
+  }
+  .robot-caption {
+    font-size: 7px;
+  }
+  .robot-action-hint {
+    font-size: 6px;
+  }
+}
+@media (max-width: 760px) {
+  .study-welcome:has(.reading-robot) {
+    grid-template-columns: 1fr;
+    padding: 27px 23px 22px;
+  }
+  .study-welcome:has(.reading-robot) h1 {
+    font-size: 35px;
+  }
+  .reading-robot {
+    width: 230px;
+    margin: -4px auto 0;
+  }
+  .study-welcome-copy > p {
+    font-size: 10px;
+  }
+  .robot-action-hint {
+    font-size: 7px;
+  }
+  .robot-caption {
+    font-size: 8px;
+  }
+  .reading-robot figcaption {
+    margin-top: 9px;
+  }
+}
+.motion-paused .robot-turning-page {
+  transform: scaleX(0);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reading-robot *,
+  .reading-robot *::before,
+  .reading-robot *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .robot-turning-page {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+.robot-motion-toggle {
+  margin-top: 9px;
+  border: 1px solid #d8c3e7;
+  border-radius: 20px;
+  color: #a080b8;
+  background: #ffffff55;
+  padding: 4px 9px;
+  font-size: 7px;
+  line-height: 1.5;
+}
+.robot-motion-toggle:hover:not(:disabled) {
+  background: #ffffffa8;
+}
+.robot-motion-toggle:disabled {
+  cursor: default;
+  opacity: 0.65;
+}

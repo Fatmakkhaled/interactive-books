@@ -4,8 +4,14 @@ import { courses } from "./courses";
 import { studyModes } from "./study-types";
 import type { StudyMode, StudyResult } from "./study-types";
 import "./StudyAssistant.css";
+import ReadingRobot from "./ReadingRobot";
 
-type Props = { onBack: () => void };
+type Props = {
+  onBack: () => void;
+  motionPaused: boolean;
+  reducedMotion: boolean;
+  onToggleMotion: () => void;
+};
 function References({ ids, result }: { ids: number[]; result: StudyResult }) {
   return (
     <div className="study-references">
@@ -21,7 +27,12 @@ function References({ ids, result }: { ids: number[]; result: StudyResult }) {
     </div>
   );
 }
-export default function StudyAssistant({ onBack }: Props) {
+export default function StudyAssistant({
+  onBack,
+  motionPaused,
+  reducedMotion,
+  onToggleMotion,
+}: Props) {
   const [mode, setMode] = useState<StudyMode>("summary");
   const [courseCode, setCourseCode] = useState("");
   const [notes, setNotes] = useState("");
@@ -156,20 +167,35 @@ export default function StudyAssistant({ onBack }: Props) {
         ← Back to the library
       </button>
       <div className="study-welcome">
-        <span className="study-ai-badge">✧ YOUR PERSONAL STUDY PARTNER</span>
-        <h1 id="study-heading">
-          Big ideas.
-          <br />
-          <em>A little more clarity.</em>
-        </h1>
-        <p>
-          Turn your course material into moments of understanding.
-          <br />
-          Bring your notes. Choose your way to learn.
-        </p>
-        <span className="study-welcome-spark" aria-hidden="true">
-          ✧
-        </span>
+        <div className="study-welcome-copy">
+          <span className="study-ai-badge">✧ YOUR PERSONAL STUDY PARTNER</span>
+          <h1 id="study-heading">
+            Big ideas.
+            <br />
+            <em>A little more clarity.</em>
+          </h1>
+          <p>
+            Turn your course material into moments of understanding.
+            <br />
+            Bring your notes. Choose your way to learn.
+          </p>
+        </div>
+        <ReadingRobot
+          motionPaused={motionPaused}
+          reducedMotion={reducedMotion}
+          onToggleMotion={onToggleMotion}
+          activity={
+            busy || readingPdf
+              ? "thinking"
+              : error
+                ? "retry"
+                : result
+                  ? "success"
+                  : notes.trim()
+                    ? "reading"
+                    : "idle"
+          }
+        />
       </div>
       <div
         className="study-tool-grid"

@@ -12,6 +12,7 @@ A purple-and-white university course library built with React, TypeScript, and V
 - A persistent pause-motion control and live support for operating-system reduced-motion preferences.
 - A manually browsable course spotlight with direct learning links.
 - Continue learning from up to three recently opened courses. This is local opening history, not reading progress inside externally hosted books; users can clear it.
+- A purple-and-white reading robot beside the Study Assistant. It blinks, turns pages, reacts to notes, loading, results and errors, and cycles five expressions by click, tap, Enter, or Space. Its motion control shares the library preference and respects reduced-motion settings.
 - Responsive layouts and keyboard-accessible controls.
 
 Course data is in `src/courses.ts`. BS100 is inferred from the supplied Mathematics (0) URL. Other courses are grouped by the first digit of their numerical code. CF311 and CF312 intentionally retain the same supplied destination; UR121 retains the supplied destination whose hostname contains `ur113`.
