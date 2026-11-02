@@ -31,11 +31,10 @@ const content = {
 function upstream(value: unknown = content) {
   return new Response(
     JSON.stringify({
-      status: "completed",
-      output: [
+      candidates: [
         {
-          type: "message",
-          content: [{ type: "output_text", text: JSON.stringify(value) }],
+          finishReason: "STOP",
+          content: { role: "model", parts: [{ text: JSON.stringify(value) }] },
         },
       ],
     }),
@@ -75,19 +74,35 @@ test("chunks preserve all source text with bounded numbered references", () => {
     material.replace(/\s/g, ""),
   );
 });
-test("sends a grounded structured request with no provider storage and an output budget", async () => {
+test("sends a grounded Gemini structured request with a bounded output budget", async () => {
   let called = false;
   const result = await generateStudy(input, {
     key: "test-only-not-a-real-key",
     fetcher: async (url, options) => {
       called = true;
-      assert.equal(url, "https://api.openai.com/v1/responses");
+      assert.equal(
+        url,
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
+      );
+      assert.equal(
+        new Headers(options?.headers).get("x-goog-api-key"),
+        "test-only-not-a-real-key",
+      );
+      assert.equal(new Headers(options?.headers).has("Authorization"), false);
+      assert.equal(String(url).includes("test-only-not-a-real-key"), false);
       const body = JSON.parse(String(options?.body));
-      assert.equal(body.store, false);
-      assert.equal(body.max_output_tokens, 4500);
-      assert.equal(body.text.format.strict, true);
-      assert.match(body.instructions, /untrusted source data/);
-      assert.match(body.input, /A variable stores/);
+      assert.equal(body.generationConfig.maxOutputTokens, 4500);
+      assert.equal(body.generationConfig.responseMimeType, "application/json");
+      assert.equal(
+        body.generationConfig.responseJsonSchema.additionalProperties,
+        false,
+      );
+      assert.equal(body.generationConfig.candidateCount, 1);
+      assert.match(
+        body.systemInstruction.parts[0].text,
+        /untrusted source data/,
+      );
+      assert.match(body.contents[0].parts[0].text, /A variable stores/);
       return upstream();
     },
   });
@@ -162,6 +177,7 @@ test("maps provider failures without leaking details or credentials", async () =
     [401, 503],
     [403, 503],
     [429, 429],
+    [404, 503],
     [500, 502],
   ]) {
     await assert.rejects(
@@ -179,14 +195,28 @@ test("maps provider failures without leaking details or credentials", async () =
 });
 test("rejects truncated, refused, and malformed provider responses", async () => {
   for (const payload of [
-    { status: "incomplete", output: [] },
     {
-      status: "completed",
-      output: [{ content: [{ type: "refusal", refusal: "No" }] }],
+      candidates: [
+        { finishReason: "MAX_TOKENS", content: { parts: [{ text: "{}" }] } },
+      ],
+    },
+    { promptFeedback: { blockReason: "SAFETY" } },
+    { candidates: [{ finishReason: "SAFETY" }] },
+    {
+      candidates: [
+        {
+          finishReason: "STOP",
+          content: { parts: [{ text: "invalid json" }] },
+        },
+      ],
     },
     {
-      status: "completed",
-      output: [{ content: [{ type: "output_text", text: "invalid json" }] }],
+      candidates: [
+        {
+          finishReason: "STOP",
+          content: { parts: [{ text: "{}", thought: true }] },
+        },
+      ],
     },
   ]) {
     await assert.rejects(
@@ -213,9 +243,9 @@ test("connection failures return a recoverable error", async () => {
   );
 });
 test("HTTP endpoint handles missing setup, validation, success, origin checks, and request limits", async (t) => {
-  const previousKey = process.env.STUDY_AI_API_KEY;
+  const previousKey = process.env.GEMINI_API_KEY;
   const previousFetch = globalThis.fetch;
-  delete process.env.STUDY_AI_API_KEY;
+  delete process.env.GEMINI_API_KEY;
   const server = createServer((request, response) => {
     void handler(request, response);
   });
@@ -226,8 +256,8 @@ test("HTTP endpoint handles missing setup, validation, success, origin checks, a
   const url = `http://127.0.0.1:${address.port}`;
   t.after(async () => {
     globalThis.fetch = previousFetch;
-    if (previousKey === undefined) delete process.env.STUDY_AI_API_KEY;
-    else process.env.STUDY_AI_API_KEY = previousKey;
+    if (previousKey === undefined) delete process.env.GEMINI_API_KEY;
+    else process.env.GEMINI_API_KEY = previousKey;
     resetRequestLimitsForTests();
     server.closeAllConnections();
     await new Promise((resolve) => server.close(resolve));
@@ -267,7 +297,7 @@ test("HTTP endpoint handles missing setup, validation, success, origin checks, a
     (await call({ ...input, notes: "x".repeat(210000) })).status,
     413,
   );
-  process.env.STUDY_AI_API_KEY = "test-only-not-a-real-key";
+  process.env.GEMINI_API_KEY = "test-only-not-a-real-key";
   globalThis.fetch = async () => upstream();
   response = await previousFetch(url);
   assert.deepEqual(await response.json(), { available: true });
@@ -280,4 +310,77 @@ test("HTTP endpoint handles missing setup, validation, success, origin checks, a
   response = await call();
   assert.equal(response.status, 429);
   assert.equal(response.headers.get("retry-after"), "60");
+});
+
+test("uses a configured Gemini model and never falls back to a paid provider", async () => {
+  const result = await generateStudy(input, {
+    key: "test-only",
+    model: "models/gemini-2.5-flash-lite",
+    fetcher: async (url) => {
+      assert.equal(
+        url,
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent",
+      );
+      return upstream();
+    },
+  });
+  assert.equal(result.title, content.title);
+  for (const model of [
+    "gpt-4.1-mini",
+    "../another-service",
+    "gemini-x?key=bad",
+  ])
+    await assert.rejects(
+      generateStudy(input, {
+        key: "test-only",
+        model,
+        fetcher: async () => {
+          throw new Error("Must not call a provider for an invalid model");
+        },
+      }),
+      (error) => error instanceof StudyError && error.status === 503,
+    );
+});
+test("handles invalid Google key responses without exposing provider details", async () => {
+  await assert.rejects(
+    generateStudy(input, {
+      key: "test-only",
+      fetcher: async () =>
+        new Response(
+          JSON.stringify({
+            error: {
+              message: "private upstream detail",
+              details: [{ reason: "API_KEY_INVALID" }],
+            },
+          }),
+          { status: 400 },
+        ),
+    }),
+    (error) =>
+      error instanceof StudyError &&
+      error.status === 503 &&
+      !error.message.includes("private"),
+  );
+});
+test("ignores thought parts and parses only the final structured response", async () => {
+  const result = await generateStudy(input, {
+    key: "test-only",
+    fetcher: async () =>
+      new Response(
+        JSON.stringify({
+          candidates: [
+            {
+              finishReason: "STOP",
+              content: {
+                parts: [
+                  { text: "private thinking", thought: true },
+                  { text: JSON.stringify(content) },
+                ],
+              },
+            },
+          ],
+        }),
+      ),
+  });
+  assert.equal(result.title, content.title);
 });

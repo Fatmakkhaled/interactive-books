@@ -292,9 +292,16 @@ export default function StudyAssistant({ onBack }: Props) {
             </>
           )}
           <p className="study-privacy">
-            PDF text is extracted in your browser. Material is sent to the AI
-            service only when you choose Generate. Your notes and answers aren’t
-            saved by this library.
+            PDF text is extracted in your browser. Material is sent to Google
+            Gemini only when you choose Generate, under its{" "}
+            <a
+              href="https://ai.google.dev/gemini-api/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              API terms
+            </a>
+            . Your notes and answers aren’t saved by this library.
           </p>
           {status === "checking" && (
             <p className="study-status" role="status">

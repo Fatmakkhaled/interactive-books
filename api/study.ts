@@ -57,7 +57,7 @@ export default async function handler(
     response.end(JSON.stringify(data));
   };
   if (request.method === "GET") {
-    reply(200, { available: !!process.env.STUDY_AI_API_KEY });
+    reply(200, { available: !!process.env.GEMINI_API_KEY });
     return;
   }
   if (request.method !== "POST") {
@@ -86,7 +86,7 @@ export default async function handler(
   try {
     const input = await readBody(request);
     validateInput(input);
-    const key = process.env.STUDY_AI_API_KEY;
+    const key = process.env.GEMINI_API_KEY;
     if (!key) {
       reply(503, {
         error: "The Study Assistant is being set up. Please try again later.",
