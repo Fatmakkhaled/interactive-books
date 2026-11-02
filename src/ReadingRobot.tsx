@@ -452,7 +452,7 @@ export default function ReadingRobot({
         </span>
       </button>
       <figcaption>
-        <strong>Your little study buddy</strong>
+        <strong>Your little reading companion</strong>
         <span className="robot-caption" aria-live="polite">
           {activity === "retry" && playful?.activity !== activity
             ? "A little pause. We can try again."

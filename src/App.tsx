@@ -3,7 +3,7 @@ import type { CSSProperties, PointerEvent } from "react";
 import { courses, levels } from "./courses";
 import type { Course } from "./courses";
 import "./App.css";
-import StudyAssistant from "./StudyAssistant";
+import ReadingRobot from "./ReadingRobot";
 
 function Icon({ name, size = 20 }: { name: string; size?: number }) {
   const paths: Record<string, React.ReactNode> = {
@@ -313,7 +313,6 @@ function CourseCard({
 }
 const copyrightYear = new Date().getFullYear();
 function App() {
-  const [showStudyAssistant, setShowStudyAssistant] = useState(false);
   const [level, setLevel] = useState<number | "all">("all");
   const [query, setQuery] = useState("");
   const [savedOnly, setSavedOnly] = useState(false);
@@ -388,7 +387,6 @@ function App() {
         .includes(query.toLowerCase().replace(/\s/g, "")),
   );
   function navigate(next: number | "all", saved = false) {
-    setShowStudyAssistant(false);
     setLevel(next);
     setSavedOnly(saved);
     setQuery("");
@@ -412,6 +410,7 @@ function App() {
       <aside className="sidebar">
         <a
           className="university-brand"
+          aria-label="Innovation University interactive library home"
           href="#"
           onClick={(event) => {
             event.preventDefault();
@@ -419,20 +418,27 @@ function App() {
           }}
         >
           <img
-            className="official-brand-image"
-            src="/university-logo.png"
-            alt="Innovation University"
-            width="2172"
-            height="724"
+            className="university-emblem"
+            src="/university-emblem.png"
+            alt=""
+            width="1280"
+            height="1280"
             decoding="async"
           />
-          <small className="brand-library-label">INTERACTIVE LIBRARY</small>
+          <span className="university-wordmark">
+            <span className="university-name">
+              Innovation
+              <br />
+              University
+            </span>
+            <small className="brand-library-label">INTERACTIVE LIBRARY</small>
+          </span>
         </a>
         <div className="sidebar-content">
           <p className="nav-label">YOUR LEARNING SPACE</p>
           <nav aria-label="Library navigation">
             <button
-              className={`nav-item ${!showStudyAssistant && !savedOnly && level === "all" ? "active" : ""}`}
+              className={`nav-item ${!savedOnly && level === "all" ? "active" : ""}`}
               onClick={() => navigate("all")}
             >
               <Icon name="grid" />
@@ -440,29 +446,18 @@ function App() {
               <span className="nav-count">19</span>
             </button>
             <button
-              className={`nav-item ${!showStudyAssistant && savedOnly ? "active" : ""}`}
+              className={`nav-item ${savedOnly ? "active" : ""}`}
               onClick={() => navigate("all", true)}
             >
               <Icon name="bookmark" />
               <span>Saved books</span>
               <span className="nav-count">{bookmarks.length}</span>
             </button>
-            <button
-              className={`nav-item study-nav ${showStudyAssistant ? "active" : ""}`}
-              onClick={() => {
-                setShowStudyAssistant(true);
-                window.scrollTo(0, 0);
-              }}
-            >
-              <Icon name="spark" />
-              <span>Study Assistant</span>
-              <span className="study-nav-badge">AI</span>
-            </button>
             <p className="nav-label levels-label">BROWSE BY LEVEL</p>
             {levels.map((item) => (
               <button
                 key={item.value}
-                className={`nav-item level-nav ${!showStudyAssistant && !savedOnly && level === item.value ? "active" : ""}`}
+                className={`nav-item level-nav ${!savedOnly && level === item.value ? "active" : ""}`}
                 onClick={() => navigate(item.value)}
               >
                 <span className="level-square">
@@ -499,7 +494,6 @@ function App() {
             className="topbar-link"
             href="#collection"
             onClick={() => {
-              setShowStudyAssistant(false);
               requestAnimationFrame(() => inputRef.current?.focus());
             }}
           >
@@ -508,476 +502,401 @@ function App() {
           </a>
         </header>
         <main>
-          {showStudyAssistant ? (
-            <StudyAssistant
-              onBack={() => navigate("all")}
-              motionPaused={motionOff}
-              reducedMotion={reducedMotion}
-              onToggleMotion={toggleMotion}
-            />
-          ) : (
-            <>
-              <section className="welcome">
-                <div>
-                  <p className="eyebrow">
-                    <span /> THE INNOVATION UNIVERSITY LIBRARY
-                  </p>
-                  <h1>
-                    Your knowledge.
-                    <br className="mobile-break" />{" "}
-                    <span>Your next chapter.</span>
-                  </h1>
-                  <p className="welcome-copy">
-                    A world of ideas, organized for you. Explore your courses,
-                    open a book, and keep moving forward.
-                  </p>
-                </div>
-                <span className="welcome-decoration" aria-hidden="true">
-                  ✧
-                </span>
-              </section>
-              <section
-                className="hero-banner"
-                onPointerMove={moveHero}
-                onPointerLeave={(event) => {
-                  event.currentTarget.style.setProperty("--hero-x", "0px");
-                  event.currentTarget.style.setProperty("--hero-y", "0px");
-                }}
+          <section className="welcome">
+            <div>
+              <p className="eyebrow">
+                <span /> THE INNOVATION UNIVERSITY LIBRARY
+              </p>
+              <h1>
+                Your knowledge.
+                <br className="mobile-break" /> <span>Your next chapter.</span>
+              </h1>
+              <p className="welcome-copy">
+                A world of ideas, organized for you. Explore your courses, open
+                a book, and keep moving forward.
+              </p>
+            </div>
+            <span className="welcome-decoration" aria-hidden="true">
+              ✧
+            </span>
+          </section>
+          <section
+            className="hero-banner"
+            onPointerMove={moveHero}
+            onPointerLeave={(event) => {
+              event.currentTarget.style.setProperty("--hero-x", "0px");
+              event.currentTarget.style.setProperty("--hero-y", "0px");
+            }}
+          >
+            <div className="hero-copy">
+              <span className="hero-pill">
+                <Icon name="spark" size={13} /> MADE FOR CURIOUS MINDS
+              </span>
+              <h2>
+                Great minds.
+                <br />
+                <em>Limitless possibilities.</em>
+              </h2>
+              <p>
+                Your interactive textbooks, all in one place.
+                <br />
+                Built around your journey. Ready when you are.
+              </p>
+              <a
+                className="hero-cta"
+                href="#collection"
+                onClick={() => navigate("all")}
               >
-                <div className="hero-copy">
-                  <span className="hero-pill">
-                    <Icon name="spark" size={13} /> MADE FOR CURIOUS MINDS
-                  </span>
-                  <h2>
-                    Great minds.
-                    <br />
-                    <em>Limitless possibilities.</em>
-                  </h2>
-                  <p>
-                    Your interactive textbooks, all in one place.
-                    <br />
-                    Built around your journey. Ready when you are.
-                  </p>
-                  <a
-                    className="hero-cta"
-                    href="#collection"
-                    onClick={() => navigate("all")}
-                  >
-                    Explore the collection <Icon name="arrow" size={17} />
-                  </a>
-                </div>
-                <div className="hero-illustration" aria-hidden="true">
-                  <span className="hero-orbit orbit-one" />
-                  <span className="hero-orbit orbit-two" />
-                  <span className="floating-symbol symbol-code">&lt;/&gt;</span>
-                  <span className="floating-symbol symbol-spark">✧</span>
-                  <span className="floating-symbol symbol-math">∑</span>
-                  <div className="illustrated-book book-back">
-                    <span>DISCOVER</span>
-                    <Icon name="globe" size={50} />
-                    <small>NEW PERSPECTIVES</small>
-                  </div>
-                  <div className="illustrated-book book-front">
-                    <div className="book-topline">INNOVATION UNIVERSITY</div>
-                    <span>
-                      Think.
-                      <br />
-                      Explore.
-                      <br />
-                      <em>Innovate.</em>
-                    </span>
-                    <Icon name="spark" size={40} />
-                    <small>YOUR JOURNEY STARTS HERE</small>
-                  </div>
-                  <span className="book-shadow" />
-                </div>
+                Explore the collection <Icon name="arrow" size={17} />
+              </a>
+            </div>
+            <div className="hero-robot">
+              <ReadingRobot
+                activity={
+                  query.trim()
+                    ? "reading"
+                    : savedOnly && bookmarks.length
+                      ? "success"
+                      : "idle"
+                }
+                motionPaused={motionOff}
+                reducedMotion={reducedMotion}
+                onToggleMotion={toggleMotion}
+              />
+            </div>
+          </section>
+          <div className="stats-strip">
+            <div>
+              <span className="stat-icon">
+                <Icon name="book" />
+              </span>
+              <p>
+                <strong>19</strong>
+                <span>Interactive books</span>
+              </p>
+            </div>
+            <div>
+              <span className="stat-icon">
+                <Icon name="layers" />
+              </span>
+              <p>
+                <strong>
+                  3 <small>+ Foundation</small>
+                </strong>
+                <span>Academic levels</span>
+              </p>
+            </div>
+            <div>
+              <span className="stat-icon">
+                <Icon name="globe" />
+              </span>
+              <p>
+                <strong>One place.</strong>
+                <span>A whole world of knowledge</span>
+              </p>
+            </div>
+            <div className="stats-note">
+              <span className="status-dot" /> Your learning journey, connected.
+            </div>
+          </div>
+          <section
+            className="spotlight-section"
+            aria-labelledby="spotlight-heading"
+          >
+            <div className="spotlight-intro">
+              <span className="spotlight-kicker">
+                <Icon name="spark" size={14} /> IN THE SPOTLIGHT
+              </span>
+              <h2 id="spotlight-heading">
+                One book.
+                <br />
+                <em>A whole new perspective.</em>
+              </h2>
+              <p>A little inspiration for your next learning adventure.</p>
+              <div className="spotlight-controls">
                 <button
-                  className="motion-toggle"
-                  onClick={toggleMotion}
-                  disabled={reducedMotion}
-                  aria-pressed={motionOff}
-                  aria-label={
-                    reducedMotion
-                      ? "Reduced motion enabled by your device"
-                      : motionPaused
-                        ? "Resume animations"
-                        : "Pause animations"
+                  aria-label="Previous featured course"
+                  onClick={() =>
+                    setSpotlightIndex(
+                      (index) =>
+                        (index + spotlightCourses.length - 1) %
+                        spotlightCourses.length,
+                    )
                   }
                 >
-                  <span aria-hidden="true">{motionOff ? "▷" : "Ⅱ"}</span>
-                  {reducedMotion
-                    ? "Reduced motion"
-                    : motionPaused
-                      ? "Motion paused"
-                      : "Pause motion"}
+                  ←
                 </button>
-                <span className="hero-corner">
-                  LEARN SOMETHING EXTRAORDINARY.
-                </span>
-              </section>
-              <div className="stats-strip">
-                <div>
-                  <span className="stat-icon">
-                    <Icon name="book" />
-                  </span>
-                  <p>
-                    <strong>19</strong>
-                    <span>Interactive books</span>
-                  </p>
-                </div>
-                <div>
-                  <span className="stat-icon">
-                    <Icon name="layers" />
-                  </span>
-                  <p>
-                    <strong>
-                      3 <small>+ Foundation</small>
-                    </strong>
-                    <span>Academic levels</span>
-                  </p>
-                </div>
-                <div>
-                  <span className="stat-icon">
-                    <Icon name="globe" />
-                  </span>
-                  <p>
-                    <strong>One place.</strong>
-                    <span>A whole world of knowledge</span>
-                  </p>
-                </div>
-                <div className="stats-note">
-                  <span className="status-dot" /> Your learning journey,
-                  connected.
-                </div>
-              </div>
-              <section className="study-invite">
-                <span aria-hidden="true">✧</span>
-                <div>
-                  <p>MEET YOUR AI STUDY PARTNER</p>
-                  <h2>A little help. A whole new understanding.</h2>
-                  <small>
-                    Summaries, flashcards, quizzes, and explanations from your
-                    material.
-                  </small>
+                <div role="group" aria-label="Featured courses">
+                  {spotlightCourses.map((item, index) => (
+                    <button
+                      key={item.course.code}
+                      aria-label={`Feature ${item.course.code}`}
+                      aria-pressed={index === spotlightIndex}
+                      onClick={() => setSpotlightIndex(index)}
+                    >
+                      <span />
+                    </button>
+                  ))}
                 </div>
                 <button
-                  onClick={() => {
-                    setShowStudyAssistant(true);
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  Try Study Assistant <span aria-hidden="true">↗</span>
-                </button>
-              </section>
-              <section
-                className="spotlight-section"
-                aria-labelledby="spotlight-heading"
-              >
-                <div className="spotlight-intro">
-                  <span className="spotlight-kicker">
-                    <Icon name="spark" size={14} /> IN THE SPOTLIGHT
-                  </span>
-                  <h2 id="spotlight-heading">
-                    One book.
-                    <br />
-                    <em>A whole new perspective.</em>
-                  </h2>
-                  <p>A little inspiration for your next learning adventure.</p>
-                  <div className="spotlight-controls">
-                    <button
-                      aria-label="Previous featured course"
-                      onClick={() =>
-                        setSpotlightIndex(
-                          (index) =>
-                            (index + spotlightCourses.length - 1) %
-                            spotlightCourses.length,
-                        )
-                      }
-                    >
-                      ←
-                    </button>
-                    <div role="group" aria-label="Featured courses">
-                      {spotlightCourses.map((item, index) => (
-                        <button
-                          key={item.course.code}
-                          aria-label={`Feature ${item.course.code}`}
-                          aria-pressed={index === spotlightIndex}
-                          onClick={() => setSpotlightIndex(index)}
-                        >
-                          <span />
-                        </button>
-                      ))}
-                    </div>
-                    <button
-                      aria-label="Next featured course"
-                      onClick={() =>
-                        setSpotlightIndex(
-                          (index) => (index + 1) % spotlightCourses.length,
-                        )
-                      }
-                    >
-                      →
-                    </button>
-                  </div>
-                </div>
-                <div className="spotlight-feature" key={spotlight.course.code}>
-                  <div
-                    className={`spotlight-art tone-${spotlight.course.icon}`}
-                    aria-hidden="true"
-                  >
-                    <span className="spotlight-orbit" />
-                    <Icon name={spotlight.course.icon} size={64} />
-                    <strong>{spotlight.course.code}</strong>
-                    <span className="spotlight-art-caption">
-                      OPEN A NEW POSSIBILITY
-                    </span>
-                  </div>
-                  <div className="spotlight-content">
-                    <div className="spotlight-tags">
-                      <span className="course-code">
-                        {spotlight.course.code}
-                      </span>
-                      <span>
-                        Level {spotlight.course.level} ·{" "}
-                        {spotlight.course.subject}
-                      </span>
-                    </div>
-                    <h3>{spotlight.course.title}</h3>
-                    <p>{spotlight.description}</p>
-                    <a
-                      href={spotlight.course.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => rememberCourse(spotlight.course.code)}
-                      onAuxClick={(event) => {
-                        if (event.button === 1)
-                          rememberCourse(spotlight.course.code);
-                      }}
-                      className="spotlight-cta"
-                      aria-label={`Start learning ${spotlight.course.code} (new tab)`}
-                    >
-                      Start learning <Icon name="arrow" size={16} />
-                    </a>
-                  </div>
-                </div>
-              </section>
-              {recentCourses.length > 0 && (
-                <section
-                  className="recent-section"
-                  aria-labelledby="recent-heading"
-                >
-                  <div className="recent-heading">
-                    <div>
-                      <p className="eyebrow">
-                        PICK UP WHERE CURIOSITY LEFT YOU
-                      </p>
-                      <h2 id="recent-heading">
-                        Continue learning<span className="heading-dot">.</span>
-                      </h2>
-                      <p>Your recently opened courses, ready when you are.</p>
-                    </div>
-                    <button onClick={clearRecent}>Clear history</button>
-                  </div>
-                  <div className="recent-grid">
-                    {recentCourses.map((course, index) => (
-                      <a
-                        className="recent-course"
-                        href={course.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        key={course.code}
-                        onClick={() => rememberCourse(course.code)}
-                        onAuxClick={(event) => {
-                          if (event.button === 1) rememberCourse(course.code);
-                        }}
-                      >
-                        <span className="recent-course-icon">
-                          <Icon name={course.icon} size={23} />
-                        </span>
-                        <span>
-                          <small>
-                            {course.code}
-                            {index === 0 ? " · Last opened" : ""}
-                          </small>
-                          <strong>{course.title}</strong>
-                        </span>
-                        <Icon name="arrow" size={17} />
-                      </a>
-                    ))}
-                  </div>
-                  {recentStorageError && (
-                    <p className="storage-notice" role="status">
-                      Recently opened courses are available for this session.
-                      Your browser is preventing history from being saved for
-                      next time.
-                    </p>
-                  )}
-                </section>
-              )}
-              <section id="collection" className="collection">
-                <div className="collection-heading">
-                  <div>
-                    <p className="eyebrow">EXPLORE. LEARN. GROW.</p>
-                    <h2>
-                      {savedOnly
-                        ? "Your saved collection"
-                        : "The book collection"}
-                      <span className="heading-dot">.</span>
-                    </h2>
-                  </div>
-                  <label className="search-field">
-                    <Icon name="search" size={18} />
-                    <input
-                      ref={inputRef}
-                      type="search"
-                      value={query}
-                      onChange={(event) => setQuery(event.target.value)}
-                      placeholder="Search by title or course code..."
-                      aria-label="Search books by title or course code"
-                    />
-                    {query && (
-                      <button
-                        onClick={() => {
-                          setQuery("");
-                          inputRef.current?.focus();
-                        }}
-                        aria-label="Clear search"
-                      >
-                        <Icon name="close" size={15} />
-                      </button>
-                    )}
-                  </label>
-                </div>
-                <div className="collection-controls">
-                  <div
-                    className="level-tabs"
-                    role="group"
-                    aria-label="Filter by academic level"
-                  >
-                    <button
-                      aria-pressed={level === "all"}
-                      className={level === "all" ? "selected" : ""}
-                      onClick={() => setLevel("all")}
-                    >
-                      All levels{" "}
-                      <span>{savedOnly ? bookmarks.length : 19}</span>
-                    </button>
-                    {levels.map((item) => (
-                      <button
-                        key={item.value}
-                        aria-pressed={level === item.value}
-                        className={level === item.value ? "selected" : ""}
-                        onClick={() => setLevel(item.value)}
-                      >
-                        {item.name}
-                      </button>
-                    ))}
-                  </div>
-                  <span className="results-count" role="status">
-                    {filtered.length} {filtered.length === 1 ? "book" : "books"}
-                  </span>
-                </div>
-                {storageError && (
-                  <p className="storage-notice" role="status">
-                    Bookmarks are available for this session. Your browser is
-                    preventing them from being saved for next time.
-                  </p>
-                )}
-                {filtered.length ? (
-                  levels
-                    .filter((item) =>
-                      filtered.some((course) => course.level === item.value),
+                  aria-label="Next featured course"
+                  onClick={() =>
+                    setSpotlightIndex(
+                      (index) => (index + 1) % spotlightCourses.length,
                     )
-                    .map((item) => (
-                      <section
-                        className="level-section"
-                        key={`${item.value}-${level}-${savedOnly}-${query}`}
-                        aria-labelledby={`level-${item.value}`}
-                      >
-                        <div className="level-heading">
-                          <span
-                            className={`level-heading-icon level-${item.value}`}
-                          >
-                            {item.value === 0 ? (
-                              <Icon name="spark" size={19} />
-                            ) : (
-                              `0${item.value}`
-                            )}
-                          </span>
-                          <div>
-                            <h3 id={`level-${item.value}`}>
-                              {item.name}
-                              <span>
-                                {
-                                  filtered.filter(
-                                    (course) => course.level === item.value,
-                                  ).length
-                                }{" "}
-                                {filtered.filter(
-                                  (course) => course.level === item.value,
-                                ).length === 1
-                                  ? "book"
-                                  : "books"}
-                              </span>
-                            </h3>
-                            <p>{item.description}</p>
-                          </div>
-                          <span className="section-rule" />
-                        </div>
-                        <div className="course-grid">
-                          {filtered
-                            .filter((course) => course.level === item.value)
-                            .map((course, index) => (
-                              <CourseCard
-                                key={course.code}
-                                course={course}
-                                index={index}
-                                onOpen={rememberCourse}
-                                saved={bookmarks.includes(course.code)}
-                                toggle={() => toggle(course.code)}
-                              />
-                            ))}
-                        </div>
-                      </section>
-                    ))
-                ) : (
-                  <div className="empty-state">
-                    <span>
-                      <Icon
-                        name={savedOnly && !query ? "bookmark" : "search"}
-                        size={32}
-                      />
-                    </span>
-                    <h3>
-                      {savedOnly && !query
-                        ? "Your next favorites belong here."
-                        : "No books found."}
-                    </h3>
-                    <p>
-                      {savedOnly && !query
-                        ? "Save a book using its bookmark icon to build your own collection."
-                        : "Try a different title, course code, or academic level."}
-                    </p>
-                    <button onClick={() => navigate("all")}>
-                      Browse all books <Icon name="arrow" size={15} />
-                    </button>
-                  </div>
-                )}
-              </section>
-              <section className="closing-note">
-                <span>
-                  <Icon name="spark" size={24} />
+                  }
+                >
+                  →
+                </button>
+              </div>
+            </div>
+            <div className="spotlight-feature" key={spotlight.course.code}>
+              <div
+                className={`spotlight-art tone-${spotlight.course.icon}`}
+                aria-hidden="true"
+              >
+                <span className="spotlight-orbit" />
+                <Icon name={spotlight.course.icon} size={64} />
+                <strong>{spotlight.course.code}</strong>
+                <span className="spotlight-art-caption">
+                  OPEN A NEW POSSIBILITY
                 </span>
-                <div>
-                  <h2>A little curiosity goes a long way.</h2>
-                  <p>Make your next chapter a great one.</p>
+              </div>
+              <div className="spotlight-content">
+                <div className="spotlight-tags">
+                  <span className="course-code">{spotlight.course.code}</span>
+                  <span>
+                    Level {spotlight.course.level} · {spotlight.course.subject}
+                  </span>
                 </div>
-                <a href="#collection">
-                  Keep exploring <Icon name="arrow" size={16} />
+                <h3>{spotlight.course.title}</h3>
+                <p>{spotlight.description}</p>
+                <a
+                  href={spotlight.course.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => rememberCourse(spotlight.course.code)}
+                  onAuxClick={(event) => {
+                    if (event.button === 1)
+                      rememberCourse(spotlight.course.code);
+                  }}
+                  className="spotlight-cta"
+                  aria-label={`Start learning ${spotlight.course.code} (new tab)`}
+                >
+                  Start learning <Icon name="arrow" size={16} />
                 </a>
-              </section>
-            </>
+              </div>
+            </div>
+          </section>
+          {recentCourses.length > 0 && (
+            <section
+              className="recent-section"
+              aria-labelledby="recent-heading"
+            >
+              <div className="recent-heading">
+                <div>
+                  <p className="eyebrow">PICK UP WHERE CURIOSITY LEFT YOU</p>
+                  <h2 id="recent-heading">
+                    Continue learning<span className="heading-dot">.</span>
+                  </h2>
+                  <p>Your recently opened courses, ready when you are.</p>
+                </div>
+                <button onClick={clearRecent}>Clear history</button>
+              </div>
+              <div className="recent-grid">
+                {recentCourses.map((course, index) => (
+                  <a
+                    className="recent-course"
+                    href={course.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={course.code}
+                    onClick={() => rememberCourse(course.code)}
+                    onAuxClick={(event) => {
+                      if (event.button === 1) rememberCourse(course.code);
+                    }}
+                  >
+                    <span className="recent-course-icon">
+                      <Icon name={course.icon} size={23} />
+                    </span>
+                    <span>
+                      <small>
+                        {course.code}
+                        {index === 0 ? " · Last opened" : ""}
+                      </small>
+                      <strong>{course.title}</strong>
+                    </span>
+                    <Icon name="arrow" size={17} />
+                  </a>
+                ))}
+              </div>
+              {recentStorageError && (
+                <p className="storage-notice" role="status">
+                  Recently opened courses are available for this session. Your
+                  browser is preventing history from being saved for next time.
+                </p>
+              )}
+            </section>
           )}
+          <section id="collection" className="collection">
+            <div className="collection-heading">
+              <div>
+                <p className="eyebrow">EXPLORE. LEARN. GROW.</p>
+                <h2>
+                  {savedOnly ? "Your saved collection" : "The book collection"}
+                  <span className="heading-dot">.</span>
+                </h2>
+              </div>
+              <label className="search-field">
+                <Icon name="search" size={18} />
+                <input
+                  ref={inputRef}
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Search by title or course code..."
+                  aria-label="Search books by title or course code"
+                />
+                {query && (
+                  <button
+                    onClick={() => {
+                      setQuery("");
+                      inputRef.current?.focus();
+                    }}
+                    aria-label="Clear search"
+                  >
+                    <Icon name="close" size={15} />
+                  </button>
+                )}
+              </label>
+            </div>
+            <div className="collection-controls">
+              <div
+                className="level-tabs"
+                role="group"
+                aria-label="Filter by academic level"
+              >
+                <button
+                  aria-pressed={level === "all"}
+                  className={level === "all" ? "selected" : ""}
+                  onClick={() => setLevel("all")}
+                >
+                  All levels <span>{savedOnly ? bookmarks.length : 19}</span>
+                </button>
+                {levels.map((item) => (
+                  <button
+                    key={item.value}
+                    aria-pressed={level === item.value}
+                    className={level === item.value ? "selected" : ""}
+                    onClick={() => setLevel(item.value)}
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+              <span className="results-count" role="status">
+                {filtered.length} {filtered.length === 1 ? "book" : "books"}
+              </span>
+            </div>
+            {storageError && (
+              <p className="storage-notice" role="status">
+                Bookmarks are available for this session. Your browser is
+                preventing them from being saved for next time.
+              </p>
+            )}
+            {filtered.length ? (
+              levels
+                .filter((item) =>
+                  filtered.some((course) => course.level === item.value),
+                )
+                .map((item) => (
+                  <section
+                    className="level-section"
+                    key={`${item.value}-${level}-${savedOnly}-${query}`}
+                    aria-labelledby={`level-${item.value}`}
+                  >
+                    <div className="level-heading">
+                      <span
+                        className={`level-heading-icon level-${item.value}`}
+                      >
+                        {item.value === 0 ? (
+                          <Icon name="spark" size={19} />
+                        ) : (
+                          `0${item.value}`
+                        )}
+                      </span>
+                      <div>
+                        <h3 id={`level-${item.value}`}>
+                          {item.name}
+                          <span>
+                            {
+                              filtered.filter(
+                                (course) => course.level === item.value,
+                              ).length
+                            }{" "}
+                            {filtered.filter(
+                              (course) => course.level === item.value,
+                            ).length === 1
+                              ? "book"
+                              : "books"}
+                          </span>
+                        </h3>
+                        <p>{item.description}</p>
+                      </div>
+                      <span className="section-rule" />
+                    </div>
+                    <div className="course-grid">
+                      {filtered
+                        .filter((course) => course.level === item.value)
+                        .map((course, index) => (
+                          <CourseCard
+                            key={course.code}
+                            course={course}
+                            index={index}
+                            onOpen={rememberCourse}
+                            saved={bookmarks.includes(course.code)}
+                            toggle={() => toggle(course.code)}
+                          />
+                        ))}
+                    </div>
+                  </section>
+                ))
+            ) : (
+              <div className="empty-state">
+                <span>
+                  <Icon
+                    name={savedOnly && !query ? "bookmark" : "search"}
+                    size={32}
+                  />
+                </span>
+                <h3>
+                  {savedOnly && !query
+                    ? "Your next favorites belong here."
+                    : "No books found."}
+                </h3>
+                <p>
+                  {savedOnly && !query
+                    ? "Save a book using its bookmark icon to build your own collection."
+                    : "Try a different title, course code, or academic level."}
+                </p>
+                <button onClick={() => navigate("all")}>
+                  Browse all books <Icon name="arrow" size={15} />
+                </button>
+              </div>
+            )}
+          </section>
+          <section className="closing-note">
+            <span>
+              <Icon name="spark" size={24} />
+            </span>
+            <div>
+              <h2>A little curiosity goes a long way.</h2>
+              <p>Make your next chapter a great one.</p>
+            </div>
+            <a href="#collection">
+              Keep exploring <Icon name="arrow" size={16} />
+            </a>
+          </section>
           <footer>
             <span>
               © {copyrightYear} Innovation University{" "}

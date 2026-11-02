@@ -37,7 +37,7 @@
   box-shadow: 0 5px 14px #703cc21c;
 }
 .university-brand > span:last-child {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 800;
   letter-spacing: 1.2px;
   color: #55258f;
@@ -45,13 +45,13 @@
 }
 .university-brand > span > span {
   display: block;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 3.1px;
 }
 .university-brand small {
   display: block;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   margin-top: 5px;
   color: #9a8aa9;
@@ -61,7 +61,7 @@
   padding: 20px 18px;
 }
 .nav-label {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   font-weight: 700;
   color: #a39aac;
@@ -78,7 +78,7 @@
   padding: 13px 15px;
   border-radius: 9px;
   text-align: left;
-  font-size: 12px;
+  font-size: 15px;
   margin-bottom: 6px;
   color: #857b93;
 }
@@ -91,7 +91,7 @@
   font-weight: 650;
 }
 .nav-count {
-  font-size: 10px;
+  font-size: 14px;
   padding: 3px 6px;
   background: #f5f1fa;
   color: #9a87b3;
@@ -113,7 +113,7 @@
   place-items: center;
   border: 1px solid #ede8f3;
   border-radius: 6px;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 650;
 }
 .level-nav {
@@ -133,23 +133,23 @@
 }
 .mini-spark {
   display: block;
-  font-size: 29px;
+  font-size: 32px;
   color: #9c72d4;
   margin-bottom: 5px;
 }
 .sidebar-message strong {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: #644089;
 }
 .sidebar-message p {
-  font-size: 10px;
+  font-size: 14px;
   line-height: 1.8;
   color: #9a8aaa;
   margin-bottom: 0;
 }
 .university-caption {
-  font-size: 9px;
+  font-size: 12px;
   color: #a397af;
   display: flex;
   align-items: center;
@@ -179,7 +179,7 @@
   display: flex;
   gap: 15px;
   align-items: center;
-  font-size: 10px;
+  font-size: 14px;
   color: #a69caf;
 }
 .breadcrumb strong {
@@ -191,7 +191,7 @@
   gap: 8px;
   align-items: center;
   color: #92839f;
-  font-size: 10px;
+  font-size: 14px;
 }
 main {
   max-width: 1440px;
@@ -205,7 +205,7 @@ main {
   margin-bottom: 27px;
 }
 .eyebrow {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 1.8px;
   font-weight: 700;
   color: #a08aac;
@@ -221,7 +221,7 @@ main {
   vertical-align: middle;
 }
 .welcome h1 {
-  font-size: 30px;
+  font-size: 34px;
   letter-spacing: -1.1px;
   font-weight: 650;
   line-height: 1.3;
@@ -232,7 +232,7 @@ main {
   color: #9b7dbd;
 }
 .welcome-copy {
-  font-size: 11px;
+  font-size: 14px;
   color: #958a9f;
   line-height: 1.8;
   margin: 10px 0 0;
@@ -280,13 +280,13 @@ main {
   border: 1px solid #ffffff29;
   border-radius: 20px;
   padding: 6px 10px;
-  font-size: 7px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 1.3px;
   color: #e9d9ff;
 }
 .hero-copy h2 {
-  font-size: 39px;
+  font-size: 42px;
   line-height: 1.16;
   letter-spacing: -1px;
   font-weight: 550;
@@ -296,10 +296,10 @@ main {
   font-family: Georgia, serif;
   font-weight: normal;
   color: #dcc0ff;
-  font-size: 40px;
+  font-size: 44px;
 }
 .hero-copy p {
-  font-size: 10px;
+  font-size: 14px;
   line-height: 1.8;
   color: #d3bce9;
   margin-bottom: 20px;
@@ -312,7 +312,7 @@ main {
   background: white;
   border-radius: 6px;
   padding: 11px 15px;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 600;
   box-shadow: 0 4px 10px #30124522;
 }
@@ -361,11 +361,11 @@ main {
   justify-content: space-around;
 }
 .book-back > span {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 2px;
 }
 .book-back > small {
-  font-size: 5px;
+  font-size: 10px;
   letter-spacing: 1px;
 }
 .book-front {
@@ -378,12 +378,12 @@ main {
   z-index: 2;
 }
 .book-topline {
-  font-size: 5px;
+  font-size: 10px;
   letter-spacing: 1px;
 }
 .book-front > span {
   font-family: Georgia, serif;
-  font-size: 25px;
+  font-size: 28px;
   line-height: 1.13;
   margin: 18px 0 8px;
 }
@@ -416,7 +416,7 @@ main {
   left: 2%;
   top: 45px;
   font-family: monospace;
-  font-size: 20px;
+  font-size: 22px;
   transform: rotate(-14deg);
 }
 .symbol-spark {
@@ -429,14 +429,14 @@ main {
   right: 11%;
   bottom: 40px;
   font-family: Georgia, serif;
-  font-size: 28px;
+  font-size: 30px;
   transform: rotate(15deg);
 }
 .hero-corner {
   position: absolute;
   right: 20px;
   bottom: 14px;
-  font-size: 5px;
+  font-size: 10px;
   letter-spacing: 2px;
   color: #d8b7fb8c;
 }
@@ -470,24 +470,24 @@ main {
 .stats-strip p > strong {
   display: block;
   font-weight: 650;
-  font-size: 18px;
+  font-size: 20px;
   color: #5b397d;
   letter-spacing: -0.3px;
 }
 .stats-strip p > strong > small {
-  font-size: 9px;
+  font-size: 12px;
   color: #a497b0;
   font-weight: 400;
   letter-spacing: 0;
 }
 .stats-strip p > span {
-  font-size: 8px;
+  font-size: 11px;
   color: #a297ad;
   display: block;
   margin-top: 4px;
 }
 .stats-strip .stats-note {
-  font-size: 8px;
+  font-size: 11px;
   color: #a497b0;
   margin-left: auto;
   gap: 6px;
@@ -502,11 +502,11 @@ main {
   gap: 20px;
 }
 .collection-heading .eyebrow {
-  font-size: 7px;
+  font-size: 11px;
   margin-bottom: 8px;
 }
 .collection-heading h2 {
-  font-size: 25px;
+  font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.7px;
   margin: 0;
@@ -530,7 +530,7 @@ main {
   outline: none;
   border: 0;
   width: 100%;
-  font-size: 10px;
+  font-size: 14px;
   color: #5b486e;
   min-width: 0;
 }
@@ -562,7 +562,7 @@ main {
 .level-tabs button {
   border: 0;
   background: none;
-  font-size: 10px;
+  font-size: 14px;
   color: #9b8fa6;
   border-radius: 6px;
   padding: 8px 13px;
@@ -578,10 +578,10 @@ main {
   background: #dac6ef;
   border-radius: 4px;
   padding: 2px 5px;
-  font-size: 8px;
+  font-size: 11px;
 }
 .results-count {
-  font-size: 9px;
+  font-size: 12px;
   color: #ae9fba;
   white-space: nowrap;
 }
@@ -602,16 +602,16 @@ main {
   border-radius: 9px;
   background: #efe7fa;
   color: #8650bd;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 650;
 }
 .level-heading h3 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 650;
   margin: 0 0 5px;
 }
 .level-heading h3 > span {
-  font-size: 8px;
+  font-size: 11px;
   color: #aa9aba;
   font-weight: 400;
   margin-left: 9px;
@@ -620,7 +620,7 @@ main {
   border-radius: 4px;
 }
 .level-heading p {
-  font-size: 9px;
+  font-size: 12px;
   margin: 0;
   color: #ad9fb9;
 }
@@ -690,7 +690,7 @@ main {
   position: absolute;
   right: 17px;
   bottom: 27px;
-  font-size: 40px;
+  font-size: 44px;
   font-weight: 700;
   letter-spacing: -2px;
   opacity: 0.13;
@@ -699,7 +699,7 @@ main {
   display: block;
   position: absolute;
   bottom: 18px;
-  font-size: 7px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-weight: 600;
@@ -742,7 +742,7 @@ main {
   background: #f3ecfc;
   border: 1px solid #ece0f8;
   color: #8c56bb;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.6px;
   font-weight: 650;
   padding: 4px 6px;
@@ -752,7 +752,7 @@ main {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 7px;
+  font-size: 11px;
   color: #ad9eba;
 }
 .interactive-label > span {
@@ -762,7 +762,7 @@ main {
   border-radius: 50%;
 }
 .course-body h3 {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 1.55;
   margin: 12px 0 17px;
@@ -781,11 +781,11 @@ main {
   padding: 12px 0;
 }
 .course-bottom > span {
-  font-size: 8px;
+  font-size: 11px;
   color: #b3a6bd;
 }
 .open-book {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   color: #8751bf;
   display: flex;
@@ -844,13 +844,13 @@ main {
 }
 .closing-note h2 {
   font-family: Georgia, serif;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: normal;
   color: #74518f;
   margin: 0 0 6px;
 }
 .closing-note p {
-  font-size: 9px;
+  font-size: 12px;
   color: #ac94be;
   margin: 0;
 }
@@ -859,7 +859,7 @@ main {
   display: flex;
   align-items: center;
   gap: 16px;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   color: #9866bf;
   white-space: nowrap;
@@ -871,7 +871,7 @@ footer {
   gap: 16px;
   padding: 23px 0;
   color: #b7a9c3;
-  font-size: 8px;
+  font-size: 11px;
 }
 .footer-divider {
   padding: 0 8px;
@@ -896,12 +896,12 @@ footer {
   border-radius: 20px;
 }
 .empty-state h3 {
-  font-size: 20px;
+  font-size: 22px;
   color: #77508f;
   font-weight: 500;
 }
 .empty-state p {
-  font-size: 12px;
+  font-size: 15px;
   color: #a592b2;
   line-height: 1.8;
 }
@@ -912,13 +912,13 @@ footer {
   padding: 13px 18px;
   border-radius: 7px;
   margin-top: 12px;
-  font-size: 11px;
+  font-size: 14px;
   display: inline-flex;
   align-items: center;
   gap: 15px;
 }
 .storage-notice {
-  font-size: 11px;
+  font-size: 14px;
   color: #86669e;
   padding: 12px;
   border-radius: 6px;
@@ -939,10 +939,10 @@ footer {
     padding-left: 48px;
   }
   .hero-copy h2 {
-    font-size: 45px;
+    font-size: 46px;
   }
   .hero-copy h2 em {
-    font-size: 46px;
+    font-size: 48px;
   }
   .course-art {
     height: 145px;
@@ -951,7 +951,7 @@ footer {
     min-height: 165px;
   }
   .course-body h3 {
-    font-size: 15px;
+    font-size: 17px;
   }
 }
 @media (max-width: 1180px) {
@@ -966,13 +966,13 @@ footer {
     gap: 9px;
   }
   .university-brand > span:last-child {
-    font-size: 11px;
+    font-size: 14px;
   }
   .university-brand > span > span {
-    font-size: 10px;
+    font-size: 14px;
   }
   .university-brand small {
-    font-size: 6px;
+    font-size: 10px;
   }
   .sidebar-content {
     padding: 15px 12px;
@@ -995,7 +995,7 @@ footer {
   }
   .hero-copy h2,
   .hero-copy h2 em {
-    font-size: 32px;
+    font-size: 36px;
   }
   .hero-copy {
     padding-left: 28px;
@@ -1022,19 +1022,19 @@ footer {
     align-items: flex-start;
   }
   .interactive-label {
-    font-size: 6px;
+    font-size: 10px;
   }
   .course-body {
     padding: 15px 13px 0;
   }
   .course-body h3 {
-    font-size: 12px;
+    font-size: 15px;
   }
   .search-field {
     min-width: 240px;
   }
   .welcome h1 {
-    font-size: 27px;
+    font-size: 30px;
   }
 }
 @media (max-width: 1000px) {
@@ -1056,11 +1056,11 @@ footer {
     padding: 0 14px;
   }
   .university-brand > span:last-child {
-    font-size: 10px;
+    font-size: 14px;
     letter-spacing: 0.9px;
   }
   .university-brand > span > span {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 2.2px;
   }
   .sidebar-bottom {
@@ -1082,7 +1082,7 @@ footer {
     left: -7%;
   }
   .book-front > span {
-    font-size: 23px;
+    font-size: 25px;
   }
   .book-front > svg {
     width: 25px;
@@ -1093,7 +1093,7 @@ footer {
   }
   .hero-copy h2,
   .hero-copy h2 em {
-    font-size: 30px;
+    font-size: 34px;
   }
   .symbol-math {
     right: 1%;
@@ -1119,7 +1119,7 @@ footer {
     top: 60px;
   }
   .welcome h1 {
-    font-size: 24px;
+    font-size: 26px;
   }
   .welcome-decoration {
     display: none;
@@ -1128,13 +1128,13 @@ footer {
     min-width: 210px;
   }
   .collection-heading h2 {
-    font-size: 23px;
+    font-size: 25px;
   }
   .stats-strip p > strong {
-    font-size: 15px;
+    font-size: 17px;
   }
   .stats-strip p > strong > small {
-    font-size: 7px;
+    font-size: 11px;
   }
   .stats-strip {
     gap: 10px;
@@ -1148,18 +1148,18 @@ footer {
     gap: 7px;
   }
   .closing-note h2 {
-    font-size: 18px;
+    font-size: 20px;
   }
   .closing-note {
     padding: 20px;
     gap: 12px;
   }
   .closing-note > a {
-    font-size: 8px;
+    font-size: 11px;
     gap: 5px;
   }
   footer {
-    font-size: 7px;
+    font-size: 11px;
   }
 }
 @media (max-width: 760px) {
@@ -1179,15 +1179,15 @@ footer {
     height: 42px;
   }
   .university-brand > span:last-child {
-    font-size: 12px;
+    font-size: 15px;
     letter-spacing: 1.5px;
   }
   .university-brand > span > span {
-    font-size: 10px;
+    font-size: 14px;
     letter-spacing: 3px;
   }
   .university-brand small {
-    font-size: 6px;
+    font-size: 10px;
   }
   .sidebar-content {
     padding: 0 16px 12px;
@@ -1207,11 +1207,11 @@ footer {
     margin: 0;
     white-space: nowrap;
     padding: 10px 12px;
-    font-size: 11px;
+    font-size: 14px;
     gap: 9px;
   }
   .nav-count {
-    font-size: 8px;
+    font-size: 11px;
     min-width: 20px;
   }
   .nav-item > svg {
@@ -1226,11 +1226,11 @@ footer {
     padding: 0 22px;
   }
   .breadcrumb {
-    font-size: 8px;
+    font-size: 11px;
     gap: 8px;
   }
   .topbar-link {
-    font-size: 8px;
+    font-size: 11px;
   }
   .topbar-link > span {
     display: none;
@@ -1242,11 +1242,11 @@ footer {
     margin-bottom: 23px;
   }
   .eyebrow {
-    font-size: 6px;
+    font-size: 10px;
     letter-spacing: 1.1px;
   }
   .welcome h1 {
-    font-size: 29px;
+    font-size: 32px;
     letter-spacing: -0.9px;
     line-height: 1.3;
   }
@@ -1254,7 +1254,7 @@ footer {
     display: block;
   }
   .welcome-copy {
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1.9;
     max-width: 310px;
   }
@@ -1268,7 +1268,7 @@ footer {
   }
   .hero-copy h2,
   .hero-copy h2 em {
-    font-size: 29px;
+    font-size: 32px;
     line-height: 1.2;
     letter-spacing: -0.8px;
   }
@@ -1276,12 +1276,12 @@ footer {
     margin-top: 19px;
   }
   .hero-copy p {
-    font-size: 9px;
+    font-size: 12px;
     line-height: 1.9;
     max-width: 205px;
   }
   .hero-pill {
-    font-size: 5px;
+    font-size: 10px;
     letter-spacing: 0.9px;
     gap: 4px;
     padding: 5px 7px;
@@ -1290,7 +1290,7 @@ footer {
     width: 10px;
   }
   .hero-cta {
-    font-size: 8px;
+    font-size: 11px;
     padding: 10px 11px;
     gap: 13px;
   }
@@ -1315,7 +1315,7 @@ footer {
     padding: 14px 9px;
   }
   .book-front > span {
-    font-size: 19px;
+    font-size: 20px;
     margin-top: 14px;
   }
   .book-front > svg {
@@ -1338,7 +1338,7 @@ footer {
     height: 33px;
   }
   .book-back > span {
-    font-size: 5px;
+    font-size: 10px;
   }
   .book-back > small {
     font-size: 3px;
@@ -1358,12 +1358,12 @@ footer {
   .symbol-code {
     left: 2%;
     top: 4px;
-    font-size: 12px;
+    font-size: 15px;
   }
   .symbol-spark {
     right: 14%;
     top: 0;
-    font-size: 30px;
+    font-size: 34px;
   }
   .symbol-math {
     display: none;
@@ -1396,15 +1396,15 @@ footer {
     width: 16px;
   }
   .stats-strip p > strong {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.3;
   }
   .stats-strip p > strong > small {
     display: block;
-    font-size: 6px;
+    font-size: 10px;
   }
   .stats-strip p > span {
-    font-size: 6px;
+    font-size: 10px;
     line-height: 1.6;
   }
   .collection-heading {
@@ -1413,17 +1413,17 @@ footer {
     gap: 19px;
   }
   .collection-heading h2 {
-    font-size: 25px;
+    font-size: 28px;
   }
   .collection-heading .eyebrow {
-    font-size: 6px;
+    font-size: 10px;
   }
   .search-field {
     width: 100%;
     padding: 12px;
   }
   .search-field input {
-    font-size: 10px;
+    font-size: 14px;
   }
   .collection-controls {
     margin-top: 17px;
@@ -1436,15 +1436,15 @@ footer {
   }
   .level-tabs button {
     padding: 8px 7px;
-    font-size: 8px;
+    font-size: 11px;
   }
   .level-tabs button > span {
-    font-size: 6px;
+    font-size: 10px;
     margin-left: 4px;
     padding: 2px 3px;
   }
   .results-count {
-    font-size: 7px;
+    font-size: 11px;
     padding-top: 9px;
   }
   .level-section {
@@ -1458,17 +1458,17 @@ footer {
     width: 30px;
     height: 30px;
     border-radius: 8px;
-    font-size: 10px;
+    font-size: 14px;
   }
   .level-heading h3 {
-    font-size: 13px;
+    font-size: 16px;
   }
   .level-heading p {
-    font-size: 8px;
+    font-size: 11px;
     line-height: 1.5;
   }
   .level-heading h3 > span {
-    font-size: 7px;
+    font-size: 11px;
   }
   .section-rule {
     display: none;
@@ -1485,13 +1485,13 @@ footer {
     height: 24px;
   }
   .art-code {
-    font-size: 29px;
+    font-size: 32px;
     right: 10px;
     bottom: 23px;
     letter-spacing: -1px;
   }
   .art-subject {
-    font-size: 5px;
+    font-size: 10px;
     letter-spacing: 0.6px;
     bottom: 15px;
   }
@@ -1518,11 +1518,11 @@ footer {
     flex-wrap: wrap;
   }
   .course-code {
-    font-size: 7px;
+    font-size: 11px;
     padding: 3px 5px;
   }
   .interactive-label {
-    font-size: 5px;
+    font-size: 10px;
     gap: 3px;
   }
   .interactive-label > span {
@@ -1530,7 +1530,7 @@ footer {
     height: 3px;
   }
   .course-body h3 {
-    font-size: 11px;
+    font-size: 14px;
     line-height: 1.6;
     margin-top: 10px;
   }
@@ -1539,10 +1539,10 @@ footer {
     gap: 5px;
   }
   .course-bottom > span {
-    font-size: 6px;
+    font-size: 10px;
   }
   .open-book {
-    font-size: 7px;
+    font-size: 11px;
     gap: 3px;
   }
   .open-book > svg {
@@ -1565,19 +1565,19 @@ footer {
     width: 20px;
   }
   .closing-note h2 {
-    font-size: 16px;
+    font-size: 18px;
   }
   .closing-note p {
-    font-size: 8px;
+    font-size: 11px;
   }
   .closing-note > a {
     margin-left: 46px;
-    font-size: 9px;
+    font-size: 12px;
     gap: 9px;
   }
   footer {
     flex-direction: column;
-    font-size: 7px;
+    font-size: 11px;
     gap: 9px;
     padding: 20px 0;
   }
@@ -1585,10 +1585,10 @@ footer {
     padding: 35px 15px;
   }
   .empty-state h3 {
-    font-size: 18px;
+    font-size: 20px;
   }
   .empty-state p {
-    font-size: 11px;
+    font-size: 14px;
   }
 }
 @media (max-width: 370px) {
@@ -1598,7 +1598,7 @@ footer {
   }
   .hero-copy h2,
   .hero-copy h2 em {
-    font-size: 26px;
+    font-size: 30px;
   }
   .hero-illustration {
     right: -50px;
@@ -1614,23 +1614,23 @@ footer {
     min-height: 148px;
   }
   .course-body h3 {
-    font-size: 14px;
+    font-size: 16px;
   }
   .interactive-label {
-    font-size: 7px;
+    font-size: 11px;
   }
   .course-bottom > span {
-    font-size: 8px;
+    font-size: 11px;
   }
   .open-book {
-    font-size: 9px;
+    font-size: 12px;
   }
   .level-tabs button {
-    font-size: 7px;
+    font-size: 11px;
     padding: 8px 6px;
   }
   .closing-note h2 {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1648,7 +1648,7 @@ footer {
   .hero-copy h2 em {
     display: block;
     max-width: 245px;
-    font-size: 27px;
+    font-size: 30px;
     line-height: 1.2;
   }
   .hero-illustration {
@@ -1715,7 +1715,7 @@ footer {
   background: #3d1b6033;
   color: #f1e6ff;
   padding: 5px 9px;
-  font-size: 8px;
+  font-size: 11px;
   cursor: pointer;
 }
 .motion-toggle:hover {
@@ -1819,13 +1819,13 @@ footer {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 7px;
+  font-size: 11px;
   font-weight: 650;
   color: #9c70c2;
   letter-spacing: 1.5px;
 }
 .spotlight-intro h2 {
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 550;
   line-height: 1.35;
   letter-spacing: -0.6px;
@@ -1838,7 +1838,7 @@ footer {
   color: #9d78be;
 }
 .spotlight-intro > p {
-  font-size: 9px;
+  font-size: 12px;
   line-height: 1.8;
   color: #9e8cab;
   max-width: 200px;
@@ -1856,7 +1856,7 @@ footer {
   background: #fff;
   border-radius: 50%;
   color: #8e60b8;
-  font-size: 12px;
+  font-size: 15px;
 }
 .spotlight-controls > button:hover {
   background: #f0e6fb;
@@ -1910,7 +1910,7 @@ footer {
     8px 9px 0 #f7f2fc;
 }
 .spotlight-art strong {
-  font-size: 22px;
+  font-size: 24px;
   color: #8053aa;
   letter-spacing: 1px;
   position: relative;
@@ -1935,7 +1935,7 @@ footer {
   border-radius: inherit;
 }
 .spotlight-art-caption {
-  font-size: 5px;
+  font-size: 10px;
   letter-spacing: 1.2px;
   color: #a17eb9;
 }
@@ -1946,14 +1946,14 @@ footer {
   flex-wrap: wrap;
 }
 .spotlight-tags > span:last-child {
-  font-size: 8px;
+  font-size: 11px;
   color: #aa92bc;
 }
 .spotlight-content {
   min-width: 0;
 }
 .spotlight-content h3 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 550;
   line-height: 1.3;
   letter-spacing: -0.6px;
@@ -1961,7 +1961,7 @@ footer {
   margin: 13px 0 10px;
 }
 .spotlight-content > p {
-  font-size: 10px;
+  font-size: 14px;
   color: #9b86ac;
   line-height: 1.9;
   margin-bottom: 17px;
@@ -1975,7 +1975,7 @@ footer {
   border-radius: 6px;
   background: #7841b7;
   color: white;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 550;
 }
 .recent-section {
@@ -1990,23 +1990,23 @@ footer {
 }
 .recent-heading h2 {
   margin: 0;
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 600;
   letter-spacing: -0.6px;
 }
 .recent-heading .eyebrow {
-  font-size: 7px;
+  font-size: 11px;
   margin-bottom: 7px;
 }
 .recent-heading p:last-child {
   color: #a592b4;
-  font-size: 10px;
+  font-size: 14px;
   margin: 7px 0 0;
 }
 .recent-heading > button {
   border: 0;
   background: none;
-  font-size: 9px;
+  font-size: 12px;
   color: #9571ae;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -2049,14 +2049,14 @@ footer {
 }
 .recent-course small {
   display: block;
-  font-size: 7px;
+  font-size: 11px;
   letter-spacing: 0.5px;
   color: #a281bb;
   margin-bottom: 5px;
 }
 .recent-course strong {
   display: block;
-  font-size: 10px;
+  font-size: 14px;
   color: #705083;
   font-weight: 550;
   line-height: 1.6;
@@ -2147,7 +2147,7 @@ footer {
     gap: 20px;
   }
   .spotlight-content h3 {
-    font-size: 21px;
+    font-size: 23px;
   }
   .spotlight-art {
     min-height: 185px;
@@ -2157,7 +2157,7 @@ footer {
     height: 48px;
   }
   .spotlight-intro h2 {
-    font-size: 20px;
+    font-size: 22px;
   }
   .motion-toggle {
     left: 28px;
@@ -2209,7 +2209,7 @@ footer {
   .motion-toggle {
     left: 20px;
     bottom: 12px;
-    font-size: 7px;
+    font-size: 11px;
   }
   .hero-corner {
     display: none;
@@ -2220,18 +2220,18 @@ footer {
     border-radius: 11px;
   }
   .spotlight-kicker {
-    font-size: 6px;
+    font-size: 10px;
     letter-spacing: 1.2px;
   }
   .spotlight-intro h2 {
-    font-size: 22px;
+    font-size: 24px;
     margin-top: 16px;
   }
   .spotlight-intro h2 br {
     display: initial;
   }
   .spotlight-intro > p {
-    font-size: 9px;
+    font-size: 12px;
     max-width: 210px;
   }
   .spotlight-controls {
@@ -2251,52 +2251,52 @@ footer {
     width: 37px;
   }
   .spotlight-art strong {
-    font-size: 17px;
+    font-size: 18px;
   }
   .spotlight-art-caption {
     font-size: 3px;
     letter-spacing: 0.6px;
   }
   .spotlight-content h3 {
-    font-size: 19px;
+    font-size: 20px;
     margin-top: 10px;
   }
   .spotlight-tags {
     gap: 6px;
   }
   .spotlight-tags > span:last-child {
-    font-size: 6px;
+    font-size: 10px;
     line-height: 1.5;
   }
   .spotlight-content > p {
-    font-size: 9px;
+    font-size: 12px;
     margin-top: 8px;
     margin-bottom: 13px;
   }
   .spotlight-cta {
-    font-size: 8px;
+    font-size: 11px;
     padding: 10px 12px;
     gap: 15px;
   }
   .recent-heading h2 {
-    font-size: 22px;
+    font-size: 24px;
   }
   .recent-heading .eyebrow {
-    font-size: 5px;
+    font-size: 10px;
     letter-spacing: 1.1px;
   }
   .recent-heading p:last-child {
-    font-size: 9px;
+    font-size: 12px;
   }
   .recent-heading > button {
-    font-size: 8px;
+    font-size: 11px;
     white-space: nowrap;
   }
   .recent-course strong {
-    font-size: 11px;
+    font-size: 14px;
   }
   .recent-course small {
-    font-size: 8px;
+    font-size: 11px;
   }
 }
 @media (max-width: 370px) {
@@ -2313,7 +2313,7 @@ footer {
     display: none;
   }
   .spotlight-content h3 {
-    font-size: 22px;
+    font-size: 24px;
   }
 }
 /* Both OS preferences and the in-page control suppress movement. */
@@ -2396,7 +2396,7 @@ html:has(.motion-paused) {
 .university-brand .brand-library-label {
   margin: 0 0 0 6px;
   color: #9585ad;
-  font-size: 6px;
+  font-size: 10px;
   font-weight: 500;
   letter-spacing: 2px;
   line-height: 1.5;
@@ -2407,7 +2407,7 @@ html:has(.motion-paused) {
     padding-right: 13px;
   }
   .university-brand .brand-library-label {
-    font-size: 5px;
+    font-size: 10px;
     letter-spacing: 1.7px;
   }
 }
@@ -2421,7 +2421,390 @@ html:has(.motion-paused) {
     width: 220px;
   }
   .university-brand .brand-library-label {
-    font-size: 6px;
+    font-size: 10px;
     letter-spacing: 2px;
+  }
+}
+
+/* Clearer university identity and comfortable reading sizes. */
+.university-brand {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  height: 116px;
+  padding: 17px 14px;
+}
+.university-emblem {
+  display: block;
+  width: 61px;
+  height: 68px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.university-brand > .university-wordmark {
+  display: block;
+  min-width: 0;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: #6551a0;
+}
+.university-brand .university-name {
+  display: block;
+  font-size: 21px;
+  line-height: 1.16;
+  letter-spacing: -0.5px;
+  font-weight: 500;
+  color: #6551a0;
+}
+.university-brand .brand-library-label {
+  display: block;
+  margin: 8px 0 0;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #827292;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.course-card {
+  display: flex;
+  flex-direction: column;
+}
+.course-art {
+  flex-shrink: 0;
+}
+.course-body {
+  flex: 1;
+  min-height: 190px;
+}
+.course-body h3 {
+  line-height: 1.55;
+}
+.course-body h3 a {
+  overflow-wrap: anywhere;
+}
+.welcome-copy,
+.hero-copy p {
+  font-size: 16px;
+  line-height: 1.8;
+}
+.hero-copy h2 {
+  font-size: clamp(30px, 3.1vw, 44px);
+}
+.hero-copy h2 em {
+  font-size: inherit;
+}
+.hero-cta {
+  font-size: 14px;
+  padding: 13px 18px;
+}
+.search-field {
+  min-width: 310px;
+}
+.search-field input {
+  font-size: 14px;
+}
+.motion-toggle {
+  font-size: 11px;
+  padding: 7px 11px;
+}
+.sidebar-message p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.sidebar-message strong {
+  font-size: 15px;
+}
+.sidebar .nav-label {
+  color: #82758e;
+}
+.book-count,
+.results-count,
+.course-bottom > span {
+  color: #857392;
+}
+.interactive-label {
+  color: #8b769a;
+}
+.art-subject {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.spotlight-content > p {
+  color: #83708f;
+}
+@media (max-width: 1180px) and (min-width: 761px) {
+  .university-brand {
+    padding-left: 9px;
+    padding-right: 9px;
+    gap: 2px;
+  }
+  .university-emblem {
+    width: 52px;
+    height: 61px;
+  }
+  .university-brand .university-name {
+    font-size: 19px;
+  }
+  .university-brand .brand-library-label {
+    font-size: 8px;
+    letter-spacing: 0.7px;
+  }
+  .topbar {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+  .search-field {
+    min-width: 250px;
+  }
+  .welcome h1 {
+    font-size: 30px;
+  }
+  .welcome-copy {
+    font-size: 15px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .university-brand {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .university-emblem {
+    width: 46px;
+    height: 58px;
+  }
+  .university-brand .university-name {
+    font-size: 18px;
+  }
+  .university-brand .brand-library-label {
+    font-size: 7px;
+  }
+  .topbar-link span {
+    display: none;
+  }
+  .hero-copy p {
+    font-size: 14px;
+  }
+  .collection-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .search-field {
+    width: 100%;
+  }
+}
+@media (max-width: 760px) {
+  .university-brand {
+    height: 110px;
+    padding: 13px 20px;
+    gap: 7px;
+  }
+  .university-emblem {
+    width: 67px;
+    height: 73px;
+  }
+  .university-brand .university-name {
+    font-size: 25px;
+  }
+  .university-brand .brand-library-label {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    margin-top: 7px;
+  }
+  .welcome-copy,
+  .hero-copy p {
+    font-size: 14px;
+  }
+  .welcome h1 {
+    font-size: 31px;
+  }
+  .hero-copy h2,
+  .hero-copy h2 em {
+    font-size: 30px;
+  }
+  .course-body {
+    min-height: 185px;
+  }
+  .course-body h3 {
+    font-size: 15px;
+  }
+  .course-tags {
+    gap: 5px;
+  }
+  .course-code {
+    font-size: 11px;
+  }
+  .interactive-label {
+    font-size: 10px;
+  }
+  .course-bottom > span {
+    font-size: 11px;
+  }
+  .open-book {
+    font-size: 12px;
+  }
+  .art-subject {
+    font-size: 8px;
+    letter-spacing: 0.6px;
+  }
+  .course-bottom {
+    flex-wrap: wrap;
+  }
+  .search-field {
+    min-width: 0;
+  }
+  .hero-cta {
+    font-size: 12px;
+  }
+  .hero-copy p {
+    max-width: 250px;
+  }
+  .breadcrumb {
+    font-size: 11px;
+    gap: 7px;
+  }
+  .level-tabs button {
+    padding: 9px 8px;
+    font-size: 12px;
+  }
+  .results-count {
+    font-size: 11px;
+  }
+  .nav-item {
+    font-size: 14px;
+  }
+}
+
+.hero-robot {
+  width: 37%;
+  max-width: 340px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px 20px 24px 0;
+}
+.hero-robot .reading-robot {
+  width: 250px;
+  margin: 0;
+}
+.hero-robot .robot-action-hint {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #f5eaff;
+  background: #ffffff12;
+  border-color: #ffffff24;
+}
+.hero-robot .robot-action-hint:hover {
+  color: #6e4793;
+}
+.hero-robot .reading-robot figcaption > strong {
+  font-size: 14px;
+  color: #f4e5ff;
+}
+.hero-robot .robot-caption {
+  font-size: 12px;
+  color: #e1c8f3;
+  line-height: 1.7;
+}
+.hero-robot .robot-motion-toggle {
+  font-size: 11px;
+  color: #f0ddff;
+  background: #ffffff0f;
+  border-color: #ffffff2b;
+  min-height: 29px;
+}
+.hero-robot .robot-motion-toggle:hover:not(:disabled) {
+  color: #734897;
+}
+.hero-copy {
+  padding-bottom: 31px;
+}
+@media (max-width: 1180px) and (min-width: 761px) {
+  .hero-robot {
+    width: 36%;
+    padding-right: 15px;
+  }
+  .hero-robot .reading-robot {
+    width: 220px;
+  }
+  .hero-robot .robot-action-hint {
+    font-size: 10px;
+  }
+  .hero-robot .reading-robot figcaption > strong {
+    font-size: 13px;
+  }
+  .hero-robot .robot-caption {
+    font-size: 11px;
+  }
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .hero-copy {
+    padding-left: 22px;
+    padding-right: 10px;
+  }
+  .hero-copy h2,
+  .hero-copy h2 em {
+    font-size: 30px;
+  }
+  .hero-robot {
+    width: 36%;
+    padding-right: 12px;
+  }
+  .hero-robot .reading-robot {
+    width: 190px;
+  }
+  .hero-robot .robot-action-hint {
+    font-size: 9px;
+  }
+  .hero-robot .reading-robot figcaption > strong {
+    font-size: 12px;
+  }
+  .hero-robot .robot-caption {
+    font-size: 10px;
+  }
+}
+@media (max-width: 760px) {
+  .hero-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-copy {
+    padding: 25px 22px 6px;
+  }
+  .hero-copy h2 em {
+    max-width: none;
+  }
+  .hero-robot {
+    width: 100%;
+    max-width: none;
+    padding: 0 20px 25px;
+  }
+  .hero-robot .reading-robot {
+    width: 205px;
+  }
+  .hero-robot .robot-caption {
+    font-size: 11px;
+  }
+  .hero-robot .reading-robot figcaption > strong {
+    font-size: 13px;
+  }
+  .hero-robot .robot-action-hint {
+    font-size: 10px;
+  }
+}
+.hero-robot .robot-illustration {
+  transform: translate3d(var(--hero-x, 0px), var(--hero-y, 0px), 0);
+  transition: transform 0.5s ease-out;
+}
+.hero-robot .robot-play:hover .robot-action-hint {
+  background: #fff;
+  color: #704c8e;
+}
+.motion-paused .hero-robot .robot-illustration {
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-robot .robot-illustration {
+    transform: none;
   }
 }

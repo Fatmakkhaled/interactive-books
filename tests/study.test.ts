@@ -9,7 +9,9 @@ import {
   validateInput,
   StudyError,
 } from "../server/study.ts";
-import handler, { resetRequestLimitsForTests } from "../api/study.ts";
+import handler, {
+  resetRequestLimitsForTests,
+} from "../server/disabled-study-handler.ts";
 
 const notes =
   "A variable stores a value. A loop repeats instructions while its condition holds. Functions group reusable instructions and may return a result. An algorithm describes a finite sequence of steps to solve a problem.";
