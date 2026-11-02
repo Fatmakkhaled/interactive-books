@@ -17,7 +17,7 @@ A purple-and-white university course library built with React, TypeScript, and V
 
 Course data is in `src/courses.ts`. BS100 is inferred from the supplied Mathematics (0) URL. Other courses are grouped by the first digit of their numerical code. CF311 and CF312 intentionally retain the same supplied destination; UR121 retains the supplied destination whose hostname contains `ur113`.
 
-The current identity uses a text wordmark and a generic library symbol. The official university logo still needs to be supplied; it is not included in the repository.
+The header uses `public/university-logo.png`, a compact web version prepared from the university logo supplied by the user. Its aspect ratio is preserved across desktop and mobile layouts; the library label is separate from the university artwork.
 
 ## Development
 

@@ -418,13 +418,15 @@ function App() {
             navigate("all");
           }}
         >
-          <span className="brand-emblem">
-            <Icon name="book" size={27} />
-          </span>
-          <span>
-            INNOVATION<span>UNIVERSITY</span>
-            <small>INTERACTIVE LIBRARY</small>
-          </span>
+          <img
+            className="official-brand-image"
+            src="/university-logo.png"
+            alt="Innovation University"
+            width="2172"
+            height="724"
+            decoding="async"
+          />
+          <small className="brand-library-label">INTERACTIVE LIBRARY</small>
         </a>
         <div className="sidebar-content">
           <p className="nav-label">YOUR LEARNING SPACE</p>
