@@ -1935,8 +1935,9 @@ footer {
   border-radius: inherit;
 }
 .spotlight-art-caption {
-  font-size: 10px;
-  letter-spacing: 1.2px;
+  font-size: 6px;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
   color: #a17eb9;
 }
 .spotlight-tags {
