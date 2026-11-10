@@ -1,6 +1,6 @@
 # Innovation University — Interactive Library
 
-A purple-and-white university course library built with React, TypeScript, and Vite. It brings together 19 externally hosted interactive books, grouped by academic level.
+A purple-and-white university course library built with React, TypeScript, and Vite. It brings together 21 externally hosted interactive books, grouped by academic level.
 
 ## Features
 
@@ -43,7 +43,7 @@ node /workspace/interactive-books-tools/university-smoke-test.mjs
 node /workspace/interactive-books-tools/motion-smoke-test.mjs
 ```
 
-That helper is retained outside the Git checkout. It checks all 19 link destinations, level counts, search, bookmarks, storage failure handling, and mobile layouts.
+That helper is retained outside the Git checkout. It checks all course link destinations, level counts, search, bookmarks, storage failure handling, and mobile layouts.
 
 ## Hosting
 

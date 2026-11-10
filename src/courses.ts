@@ -40,6 +40,14 @@ export const courses: Course[] = [
     icon: "monitor",
   },
   {
+    code: "BS114",
+    title: "Physics and Electronics",
+    url: "https://bs114-interactive-physics-and-elect-alpha.vercel.app/",
+    level: 1,
+    subject: "Physics and electronics",
+    icon: "chip",
+  },
+  {
     code: "BS116",
     title: "Mathematics (1): Calculus for Computing Sciences",
     url: "https://koldoishere.github.io/math1-hub/math-1-bs-116-interactive-book/#/",
@@ -54,6 +62,14 @@ export const courses: Course[] = [
     level: 0,
     subject: "Mathematics",
     icon: "math",
+  },
+  {
+    code: "UR211",
+    title: "Communication Skills",
+    url: "https://ur211-interactive-hub.vercel.app/",
+    level: 2,
+    subject: "University requirements",
+    icon: "globe",
   },
   {
     code: "BS213",

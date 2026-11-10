@@ -427,7 +427,7 @@ function App() {
             >
               <Icon name="grid" />
               <span>All books</span>
-              <span className="nav-count">19</span>
+              <span className="nav-count">{courses.length}</span>
             </button>
             <button
               className={`nav-item ${savedOnly ? "active" : ""}`}
@@ -552,7 +552,7 @@ function App() {
                 <Icon name="book" />
               </span>
               <p>
-                <strong>19</strong>
+                <strong>{courses.length}</strong>
                 <span>Interactive books</span>
               </p>
             </div>
@@ -762,7 +762,8 @@ function App() {
                   className={level === "all" ? "selected" : ""}
                   onClick={() => setLevel("all")}
                 >
-                  All levels <span>{savedOnly ? bookmarks.length : 19}</span>
+                  All levels{" "}
+                  <span>{savedOnly ? bookmarks.length : courses.length}</span>
                 </button>
                 {levels.map((item) => (
                   <button
